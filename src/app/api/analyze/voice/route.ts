@@ -45,20 +45,20 @@ export async function POST(req: NextRequest) {
     const isHighRisk = deepfakeProbability >= 65;
 
     // Localized emergency spoken voice warning
-    let spokenWarning = "";
-    if (isHighRisk) {
-      if (language === "hi") {
-        spokenWarning = "रुको! यह आवाज़ AI से बनाई गई नकली है। यह एक फ्रॉड कॉल है, किसी को पैसे मत भेजो!";
-      } else if (language === "bn") {
-        spokenWarning = "থামুন! এই কণ্ঠটি এআই দিয়ে তৈরি নকল কণ্ঠ। এটি প্রতারণামূলক কল, কাউকে টাকা পাঠাবেন না!";
-      } else {
-        spokenWarning = "Stop! This voice is fake AI cloned. This is a fraud call, do NOT send any money!";
-      }
-    } else {
-      spokenWarning = language === "hi" 
-        ? "आवाज़ में कोई गंभीर फ्रॉड संकेत नहीं मिला, फिर भी सतर्क रहें।"
-        : "No severe synthetic fraud detected, but always verify before sending funds.";
-    }
+    const allSpokenWarnings: Record<string, string> = {
+      hi: isHighRisk
+        ? "रुको! यह आवाज़ AI से बनाई गई नकली है। यह एक फ्रॉड कॉल है, किसी को पैसे मत भेजो!"
+        : "आवाज़ में कोई गंभीर फ्रॉड संकेत नहीं मिला, फिर भी सतर्क रहें।",
+      bn: isHighRisk
+        ? "থামুন! এই কণ্ঠটি এআই দিয়ে তৈরি নকল কণ্ঠ। এটি প্রতারণামূলক কল, কাউকে টাকা পাঠাবেন না!"
+        : "কণ্ঠে কোনো জালিয়াতির স্পষ্ট লক্ষণ পাওয়া যায়নি, তবুও সতর্ক থাকুন।",
+      en: isHighRisk
+        ? "Stop! This voice is fake AI cloned. This is a fraud call, do NOT send any money!"
+        : "No severe synthetic fraud detected, but always verify before sending funds.",
+    };
+
+    const chosenLang = language === "bn" ? "bn" : language === "en" ? "en" : "hi";
+    const spokenWarning = allSpokenWarnings[chosenLang];
 
     const verdict = {
       type: "voice_deepfake_scan",
@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
       verdict: isHighRisk ? "AI_CLONED_SCAM_VOICE" : "PROBABLY_LEGITIMATE",
       detectedPatterns,
       spokenWarning,
+      allSpokenWarnings,
       timestamp: new Date().toISOString(),
       recommendations: [
         "Do NOT send funds via UPI, Bank Transfer or Gift Cards.",

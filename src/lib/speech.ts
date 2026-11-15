@@ -37,7 +37,19 @@ export function playScamAlertAudio(options: SpeechAlertOptions): boolean {
 
     // Try finding matching native voice
     const voices = window.speechSynthesis.getVoices();
-    const matchingVoice = voices.find((v) => v.lang.startsWith(options.lang || "en"));
+    const targetLang = (options.lang || "hi").toLowerCase();
+    const matchingVoice = voices.find((v) => {
+      const code = v.lang.toLowerCase();
+      const name = v.name.toLowerCase();
+      if (targetLang === "bn") {
+        return code.startsWith("bn") || name.includes("bengali") || name.includes("bangla");
+      }
+      if (targetLang === "hi") {
+        return code.startsWith("hi") || name.includes("hindi");
+      }
+      return code.startsWith("en") || name.includes("english");
+    });
+
     if (matchingVoice) {
       utterance.voice = matchingVoice;
     }

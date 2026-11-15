@@ -22,6 +22,41 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { VoiceSpeakerButton } from "@/components/VoiceSpeakerButton";
 import { SupportedLanguage } from "@/lib/speech";
 
+const getActiveUpiWarning = (res: any, lang: SupportedLanguage) => {
+  if (!res) return "";
+  if (res.allSpokenWarnings?.[lang]) return res.allSpokenWarnings[lang];
+  if (res.isDangerous) {
+    if (lang === "bn") return "সাবধান! এই বাটনে চাপ দিলে আপনার ব্যাংক থেকে টাকা কেটে নেওয়া হবে! টাকা পাওয়ার জন্য কখনও UPI পিন দেবেন না!";
+    if (lang === "hi") return "सावधान! यह बटन आपके बैंक खाते से पैसे निकाल लेगा! पैसे प्राप्त करने के लिए कभी भी UPI पिन दर्ज न करें!";
+    return "Warning! This button will take money OUT of your bank account! You never need a UPI PIN to receive money!";
+  }
+  if (lang === "bn") return "এটি একটি সাধারণ পেমেন্ট লিংক। পেমেন্ট করার আগে প্রাপকের নাম যাচাই করে নিন।";
+  if (lang === "hi") return "यह एक सामान्य भुगतान लिंक प्रतीत होता है। भुगतान करने से पहले प्राप्तकर्ता का नाम अवश्य जांचें।";
+  return "Standard payment link detected. Always confirm the payee name before approving.";
+};
+
+const getActiveVoiceWarning = (res: any, lang: SupportedLanguage) => {
+  if (!res) return "";
+  if (res.allSpokenWarnings?.[lang]) return res.allSpokenWarnings[lang];
+  const isHighRisk = res.verdict === "AI_CLONED_SCAM_VOICE" || (res.deepfakeProbability && res.deepfakeProbability >= 60);
+  if (isHighRisk) {
+    if (lang === "bn") return "থামুন! এই কণ্ঠটি এআই দিয়ে তৈরি নকল কণ্ঠ। এটি প্রতারণামূলক কল, কাউকে টাকা পাঠাবেন না!";
+    if (lang === "hi") return "रुको! यह आवाज़ AI से बनाई गई नकली है। यह एक फ्रॉड कॉल है, किसी को पैसे मत भेजो!";
+    return "Stop! This voice is fake AI cloned. This is a fraud call, do NOT send any money!";
+  }
+  if (lang === "bn") return "কণ্ঠে কোনো জালিয়াতির স্পষ্ট লক্ষণ পাওয়া যায়নি, তবুও সতর্ক থাকুন।";
+  if (lang === "hi") return "आवाज़ में कोई गंभीर फ्रॉड संकेत नहीं मिला, फिर भी सतर्क रहें।";
+  return "No severe synthetic fraud detected, but always verify before sending funds.";
+};
+
+const getActiveGoldenRule = (res: any, lang: SupportedLanguage) => {
+  if (!res) return "";
+  if (res.goldenRules?.[lang]) return res.goldenRules[lang];
+  if (lang === "bn") return "গোল্ডেন রুল: টাকা রিসিভ বা গ্রহণ করার জন্য কখনও UPI PIN দিতে হয় না। পিন শুধুমাত্র টাকা পাঠানোর জন্যই ব্যবহার হয়।";
+  if (lang === "hi") return "गोल्डन नियम: पैसे प्राप्त करने के लिए आपको कभी भी UPI पिन दर्ज करने की आवश्यकता नहीं होती है। पिन केवल पैसे भेजने के लिए होता है।";
+  return "GOLDEN RULE: You NEVER enter your UPI PIN to receive money. PIN is ONLY used to send money out.";
+};
+
 export default function CitizenShieldPage() {
   const [activeTab, setActiveTab] = useState("voice");
   const [language, setLanguage] = useState<SupportedLanguage>("hi");
@@ -276,13 +311,13 @@ export default function CitizenShieldPage() {
                           <span>Emergency Spoken Alert ({language.toUpperCase()})</span>
                         </div>
                         <VoiceSpeakerButton
-                          text={voiceResult.spokenWarning}
+                          text={getActiveVoiceWarning(voiceResult, language)}
                           lang={language}
                           label="Speak Alert Out Loud"
                         />
                       </div>
                       <p className="text-xs font-mono text-rose-200 bg-[#080D1B]/80 p-2.5 rounded-lg border border-rose-500/30">
-                        "{voiceResult.spokenWarning}"
+                        "{getActiveVoiceWarning(voiceResult, language)}"
                       </p>
                     </div>
 
@@ -439,7 +474,7 @@ export default function CitizenShieldPage() {
 
                       {/* Golden Rule Highlight */}
                       <div className="mt-3 rounded-lg bg-[#080D1B] p-2.5 text-xs font-semibold text-amber-300 border border-amber-500/30">
-                        {upiResult.goldenRule}
+                        {getActiveGoldenRule(upiResult, language)}
                       </div>
                     </div>
 
@@ -450,13 +485,13 @@ export default function CitizenShieldPage() {
                           Audible Warning ({language.toUpperCase()})
                         </span>
                         <VoiceSpeakerButton
-                          text={upiResult.spokenWarning}
+                          text={getActiveUpiWarning(upiResult, language)}
                           lang={language}
                           label="Speak Alert"
                         />
                       </div>
                       <p className="text-xs font-mono text-slate-300 italic">
-                        "{upiResult.spokenWarning}"
+                        "{getActiveUpiWarning(upiResult, language)}"
                       </p>
                     </div>
 

@@ -68,20 +68,27 @@ export async function POST(req: NextRequest) {
     const scamScore = isDebitTrap ? (isCollectRequest ? 95 : 82) : 18;
     const isDangerous = scamScore >= 60;
 
-    let spokenWarning = "";
-    if (isDangerous) {
-      if (language === "hi") {
-        spokenWarning = "सावधान! यह बटन आपके बैंक खाते से पैसे निकाल लेगा! पैसे प्राप्त करने के लिए कभी भी UPI पिन दर्ज न करें!";
-      } else if (language === "bn") {
-        spokenWarning = "সাবধান! এই বাটনে চাপ দিলে আপনার ব্যাংক থেকে টাকা কেটে নেওয়া হবে! টাকা পাওয়ার জন্য কখনও UPI পিন দেবেন না!";
-      } else {
-        spokenWarning = "Warning! This button will take money OUT of your bank account! You never need a UPI PIN to receive money!";
-      }
-    } else {
-      spokenWarning = language === "hi"
-        ? "यह एक सामान्य भुगतान लिंक प्रतीत होता है। भुगतान करने से पहले प्राप्तकर्ता का नाम अवश्य जांचें।"
-        : "Standard payment link detected. Always confirm the payee name before approving.";
-    }
+    const allSpokenWarnings: Record<string, string> = {
+      hi: isDangerous
+        ? "सावधान! यह बटन आपके बैंक खाते से पैसे निकाल लेगा! पैसे प्राप्त करने के लिए कभी भी UPI पिन दर्ज न करें!"
+        : "यह एक सामान्य भुगतान लिंक प्रतीत होता है। भुगतान करने से पहले प्राप्तकर्ता का नाम अवश्य जांचें।",
+      bn: isDangerous
+        ? "সাবধান! এই বাটনে চাপ দিলে আপনার ব্যাংক থেকে টাকা কেটে নেওয়া হবে! টাকা পাওয়ার জন্য কখনও UPI পিন দেবেন না!"
+        : "এটি একটি সাধারণ পেমেন্ট লিংক। পেমেন্ট করার আগে প্রাপকের নাম যাচাই করে নিন।",
+      en: isDangerous
+        ? "Warning! This button will take money OUT of your bank account! You never need a UPI PIN to receive money!"
+        : "Standard payment link detected. Always confirm the payee name before approving.",
+    };
+
+    const goldenRules: Record<string, string> = {
+      hi: "गोल्डन नियम: पैसे प्राप्त करने के लिए आपको कभी भी UPI पिन दर्ज करने की आवश्यकता नहीं होती है। पिन केवल पैसे भेजने के लिए होता है।",
+      bn: "গোল্ডেন রুল: টাকা রিসিভ বা গ্রহণ করার জন্য কখনও UPI PIN দিতে হয় না। পিন শুধুমাত্র টাকা পাঠানোর জন্যই ব্যবহার হয়।",
+      en: "GOLDEN RULE: You NEVER enter your UPI PIN to receive money. PIN is ONLY used to send money out.",
+    };
+
+    const chosenLang = language === "bn" ? "bn" : language === "en" ? "en" : "hi";
+    const spokenWarning = allSpokenWarnings[chosenLang];
+    const goldenRule = goldenRules[chosenLang];
 
     const verdict = {
       type: "upi_scam_scan",
@@ -94,8 +101,10 @@ export async function POST(req: NextRequest) {
       isDangerous,
       suspiciousIndicators,
       spokenWarning,
+      allSpokenWarnings,
+      goldenRule,
+      goldenRules,
       timestamp: new Date().toISOString(),
-      goldenRule: "GOLDEN RULE: You NEVER enter your UPI PIN to receive money. PIN is ONLY used to send money out.",
     };
 
     // Store in MongoDB

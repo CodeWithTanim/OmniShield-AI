@@ -20,6 +20,13 @@ export function VoiceSpeakerButton({
 }: VoiceSpeakerButtonProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
+  React.useEffect(() => {
+    if (isPlaying) {
+      stopScamAlertAudio();
+      setIsPlaying(false);
+    }
+  }, [text, lang]);
+
   const handleToggle = () => {
     if (isPlaying) {
       stopScamAlertAudio();
