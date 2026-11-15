@@ -33,6 +33,7 @@ export default function RegisterPage() {
         setError(res.error.message || "Registration failed");
       } else {
         router.push("/dashboard");
+        router.refresh();
       }
     } catch (err: any) {
       setError(err?.message || "Registration failed");

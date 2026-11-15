@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   BarChart3,
   ShieldAlert,
@@ -16,8 +17,10 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatTimestamp } from "@/lib/utils";
+import { useSession } from "@/lib/auth-client";
 
 export default function DashboardPage() {
+  const { data: session } = useSession();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState<string>("");
@@ -76,6 +79,39 @@ export default function DashboardPage() {
           <span>Refresh Database</span>
         </Button>
       </div>
+
+      {/* Account Context Banner */}
+      {session?.user ? (
+        <div className="rounded-xl border border-emerald-500/40 bg-emerald-950/20 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-3 w-3 rounded-full bg-emerald-400 animate-pulse" />
+            <div>
+              <span className="font-bold text-emerald-300">
+                Authenticated Enterprise Account: {session.user.name}
+              </span>
+              <span className="text-slate-400 ml-2">({session.user.email})</span>
+            </div>
+          </div>
+          <Badge variant="success" className="w-fit text-[10px]">
+            MONGODB ATLAS SYNCED
+          </Badge>
+        </div>
+      ) : (
+        <div className="rounded-xl border border-cyan-500/30 bg-cyan-950/20 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="text-slate-300">
+            <span className="font-bold text-cyan-300">Public Live Demo Feed:</span> You are viewing anonymous system telemetry.{" "}
+            <Link href="/auth/login" className="underline text-cyan-400 hover:text-cyan-300 font-semibold">
+              Sign In
+            </Link>{" "}
+            to link company sensors and save custom shop/factory incident logs.
+          </div>
+          <Link href="/auth/login">
+            <Button size="sm" variant="outline" className="text-xs shrink-0 border-cyan-500/40 text-cyan-300">
+              Sign In to Your Account
+            </Button>
+          </Link>
+        </div>
+      )}
 
       {/* 4 Metric Cards */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">

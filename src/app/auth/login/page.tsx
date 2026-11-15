@@ -7,7 +7,7 @@ import { Lock, Mail, ShieldAlert, ArrowRight } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { signIn } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -31,9 +31,41 @@ export default function LoginPage() {
         setError(res.error.message || "Invalid credentials");
       } else {
         router.push("/dashboard");
+        router.refresh();
       }
     } catch (err: any) {
       setError(err?.message || "Sign in failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleQuickDemoLogin = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const demoEmail = "demo.owner@omnishield.ai";
+      const demoPass = "DemoPassword123!";
+      const res = await signIn.email({
+        email: demoEmail,
+        password: demoPass,
+      });
+
+      if (res?.error) {
+        const signUpRes = await signUp.email({
+          name: "Ramesh Sharma (Demo Shop Owner)",
+          email: demoEmail,
+          password: demoPass,
+        });
+        if (signUpRes?.error) {
+          setError(signUpRes.error.message || "Quick demo access failed");
+          return;
+        }
+      }
+      router.push("/dashboard");
+      router.refresh();
+    } catch (err: any) {
+      setError(err?.message || "Demo login failed");
     } finally {
       setLoading(false);
     }
@@ -87,6 +119,24 @@ export default function LoginPage() {
 
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Authenticating..." : "Sign In with BetterAuth"}
+            </Button>
+
+            <div className="relative flex py-1 items-center">
+              <div className="flex-grow border-t border-slate-800"></div>
+              <span className="flex-shrink mx-2 text-[10px] text-slate-500 uppercase tracking-wider">
+                Or Judge / Fast Access
+              </span>
+              <div className="flex-grow border-t border-slate-800"></div>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleQuickDemoLogin}
+              disabled={loading}
+              className="w-full text-xs border-cyan-500/30 bg-cyan-950/20 text-cyan-300 hover:bg-cyan-900/40"
+            >
+              ⚡ 1-Click Demo Sign In (Shop Owner)
             </Button>
 
             <div className="pt-2 text-center text-xs text-slate-400">

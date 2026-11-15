@@ -14,10 +14,12 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSession, signOut } from "@/lib/auth-client";
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const navLinks = [
     { href: "/citizen", label: "Citizen Shield", icon: Users },
@@ -63,13 +65,33 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* Actions & Login - Clean & Minimal */}
-        <div className="hidden sm:flex items-center gap-2">
-          <Link href="/auth/login">
-            <Button variant="ghost" size="sm" className="text-xs text-slate-300 hover:text-white">
-              Sign In
-            </Button>
-          </Link>
+        {/* Actions & Login - Clean & Dynamic Session Aware */}
+        <div className="hidden sm:flex items-center gap-2.5">
+          {session?.user ? (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-[#080D1B] px-2.5 py-1 text-xs">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                <span className="font-semibold text-slate-200 max-w-[130px] truncate">
+                  {session.user.name || session.user.email}
+                </span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => signOut().then(() => window.location.reload())}
+                className="text-xs text-slate-400 hover:text-rose-300 hover:bg-rose-950/20"
+              >
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <Link href="/auth/login">
+              <Button variant="ghost" size="sm" className="text-xs text-slate-300 hover:text-white">
+                Sign In
+              </Button>
+            </Link>
+          )}
+
           <Link href="/citizen">
             <Button size="sm" className="gap-1.5 text-xs">
               <Sparkles className="h-3.5 w-3.5" />
@@ -112,11 +134,22 @@ export function Navbar() {
             );
           })}
           <div className="pt-2 border-t border-slate-800 flex gap-2">
-            <Link href="/auth/login" className="w-full" onClick={() => setMobileMenuOpen(false)}>
-              <Button variant="outline" size="sm" className="w-full text-xs">
-                Sign In
+            {session?.user ? (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => signOut().then(() => window.location.reload())}
+                className="w-full text-xs text-rose-300 border-rose-500/30"
+              >
+                Sign Out ({session.user.name?.split(" ")[0] || "User"})
               </Button>
-            </Link>
+            ) : (
+              <Link href="/auth/login" className="w-full" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" size="sm" className="w-full text-xs">
+                  Sign In
+                </Button>
+              </Link>
+            )}
             <Link href="/citizen" className="w-full" onClick={() => setMobileMenuOpen(false)}>
               <Button size="sm" className="w-full text-xs">
                 Emergency Scan
