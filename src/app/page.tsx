@@ -114,34 +114,34 @@ export default function HomePage() {
 
         {/* Bottom Scroll Indicator */}
         <div className="pt-6 pb-2 flex flex-col items-center justify-center gap-1 text-slate-500 text-[11px] animate-bounce">
-          <span>Scroll to explore the 3 Shields</span>
+          <span>Explore Security Modules</span>
           <ChevronDown className="h-4 w-4 text-cyan-400" />
         </div>
       </section>
 
-      {/* THE 3 PROTECTION PILLARS */}
+      {/* THE 3 PROTECTION MODULES */}
       <section className="container mx-auto px-4 sm:px-6 max-w-6xl space-y-8">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
           <Badge variant="outline" className="text-xs uppercase font-mono tracking-wider">
-            Architecture Breakdown
+            Security Suite
           </Badge>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Three Specialized Shields for Three Real Worlds
+            Specialized Defense Across Three Vulnerable Frontiers
           </h2>
           <p className="text-xs sm:text-sm text-slate-400">
-            Designed to be used in 10 seconds by a busy chaiwala, a daily worker, or a factory supervisor.
+            Engineered for immediate 10-second response by everyday families, retail cashiers, and plant operators.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {/* Pillar 1: Citizens */}
+          {/* Module 1: Citizens */}
           <Card className="border-cyan-500/30 hover:border-cyan-400 transition-all hover:-translate-y-1">
             <CardHeader>
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-400 mb-2">
                 <Users className="h-6 w-6" />
               </div>
               <Badge variant="default" className="w-fit text-[10px]">
-                PILLAR 1: CITIZENS
+                CITIZEN SCAM SHIELD
               </Badge>
               <CardTitle className="text-lg">Citizen Scam Shield</CardTitle>
               <CardDescription>
@@ -172,14 +172,14 @@ export default function HomePage() {
             </CardContent>
           </Card>
 
-          {/* Pillar 2: Shops */}
+          {/* Module 2: Shops */}
           <Card className="border-emerald-500/30 hover:border-emerald-400 transition-all hover:-translate-y-1">
             <CardHeader>
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 mb-2">
                 <Store className="h-6 w-6" />
               </div>
               <Badge variant="success" className="w-fit text-[10px]">
-                PILLAR 2: SHOPS & KAIWALA
+                SHOP COUNTER ARMOR
               </Badge>
               <CardTitle className="text-lg">Shop Counter Armor</CardTitle>
               <CardDescription>
@@ -210,14 +210,14 @@ export default function HomePage() {
             </CardContent>
           </Card>
 
-          {/* Pillar 3: Factories */}
+          {/* Module 3: Factories */}
           <Card className="border-purple-500/30 hover:border-purple-400 transition-all hover:-translate-y-1">
             <CardHeader>
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/15 text-purple-400 mb-2">
                 <Factory className="h-6 w-6" />
               </div>
               <Badge variant="warning" className="w-fit text-[10px]">
-                PILLAR 3: FACTORIES & CODE
+                FACTORY & CODE GUARD
               </Badge>
               <CardTitle className="text-lg">Factory & Code Guard</CardTitle>
               <CardDescription>

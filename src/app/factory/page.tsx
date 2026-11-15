@@ -117,7 +117,7 @@ def machine_control():
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-300 mb-2">
             <Factory className="h-3.5 w-3.5" />
-            <span>Pillar 3: Factory Machines & Code Guard</span>
+            <span>Industrial IoT & Code Security</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Factory & Code Guard

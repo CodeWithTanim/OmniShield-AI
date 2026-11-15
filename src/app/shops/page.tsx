@@ -112,7 +112,7 @@ export default function ShopArmorPage() {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-semibold text-indigo-300 mb-2">
             <Store className="h-3.5 w-3.5" />
-            <span>Pillar 2: Shop & Counter Protection</span>
+            <span>Retail & Counter Fraud Defense</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Shop Counter Armor
