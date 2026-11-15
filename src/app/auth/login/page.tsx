@@ -118,7 +118,7 @@ export default function LoginPage() {
             </div>
 
             <Button type="submit" disabled={loading} className="w-full">
-              {loading ? "Authenticating..." : "Sign In with BetterAuth"}
+              {loading ? "Authenticating..." : "Sign In"}
             </Button>
 
             <div className="relative flex py-1 items-center">

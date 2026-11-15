@@ -12,7 +12,6 @@ import {
   Sparkles,
   CheckCircle2,
   Lock,
-  Database,
   Cpu,
   Smartphone,
   PhoneCall,
@@ -263,7 +262,7 @@ export default function HomePage() {
             </div>
             <Link href="/dashboard">
               <Button variant="outline" size="sm" className="gap-2">
-                <Database className="h-4 w-4 text-cyan-400" />
+                <Activity className="h-4 w-4 text-cyan-400" />
                 <span>Live Threat Telemetry</span>
               </Button>
             </Link>

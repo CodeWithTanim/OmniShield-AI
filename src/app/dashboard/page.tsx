@@ -8,10 +8,10 @@ import {
   Users,
   Store,
   Factory,
-  Database,
   RefreshCw,
   Clock,
   Filter,
+  Activity,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -57,8 +57,8 @@ export default function DashboardPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-semibold text-cyan-300 mb-2">
-            <Database className="h-3.5 w-3.5" />
-            <span>MongoDB Atlas Live Threat Telemetry</span>
+            <Activity className="h-3.5 w-3.5" />
+            <span>Live Security Threat Telemetry</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Unified Threat Telemetry Hub
@@ -76,7 +76,7 @@ export default function DashboardPage() {
           className="gap-2 self-start sm:self-auto"
         >
           <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />
-          <span>Refresh Database</span>
+          <span>Refresh Threat Feed</span>
         </Button>
       </div>
 
@@ -93,7 +93,7 @@ export default function DashboardPage() {
             </div>
           </div>
           <Badge variant="success" className="w-fit text-[10px]">
-            MONGODB ATLAS SYNCED
+            ENTERPRISE CLOUD SYNCED
           </Badge>
         </div>
       ) : (
@@ -124,7 +124,7 @@ export default function DashboardPage() {
             <div className="mt-2 text-2xl sm:text-3xl font-black text-white font-mono">
               {stats.totalScans}
             </div>
-            <p className="mt-1 text-[11px] text-cyan-400">Stored in MongoDB Atlas</p>
+            <p className="mt-1 text-[11px] text-cyan-400">Recorded in Secure Cloud Logs</p>
           </CardContent>
         </Card>
 
@@ -175,7 +175,7 @@ export default function DashboardPage() {
             <div>
               <CardTitle className="text-base flex items-center gap-2">
                 <Clock className="h-4 w-4 text-cyan-400" />
-                <span>Recent Threat Detections in MongoDB</span>
+                <span>Recent Verified Threat Logs</span>
               </CardTitle>
               <CardDescription>
                 Auditable event ledger proving multi-tier threat classification.
@@ -210,11 +210,11 @@ export default function DashboardPage() {
         <CardContent>
           {loading ? (
             <div className="py-16 text-center text-slate-400 text-xs">
-              Fetching threat events from MongoDB...
+              Loading live threat events...
             </div>
           ) : !data?.items?.length ? (
             <div className="py-16 text-center text-slate-400 space-y-2 text-xs">
-              <Database className="h-8 w-8 text-slate-600 mx-auto" />
+              <Activity className="h-8 w-8 text-slate-600 mx-auto" />
               <p>No recent events recorded in this filter view yet.</p>
               <p className="text-slate-500">
                 Run an emergency scan in Citizen Shield, Shop Armor, or Factory Guard to populate this live feed.

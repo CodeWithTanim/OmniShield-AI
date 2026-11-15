@@ -167,7 +167,7 @@ export default function CitizenShieldPage() {
                     <span>Analyze Suspicious Call or Message</span>
                   </CardTitle>
                   <Badge variant="outline" className="font-mono text-[10px]">
-                    REAL-TIME NLP
+                    INSTANT SCAN
                   </Badge>
                 </div>
                 <CardDescription>

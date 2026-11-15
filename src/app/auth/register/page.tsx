@@ -51,7 +51,7 @@ export default function RegisterPage() {
           </div>
           <CardTitle className="text-xl">Create OmniShield Account</CardTitle>
           <CardDescription>
-            Register as a Citizen, Shopkeeper, or Factory Supervisor with BetterAuth & MongoDB.
+            Register as a Citizen, Shopkeeper, or Factory Supervisor.
           </CardDescription>
         </CardHeader>
         <CardContent>

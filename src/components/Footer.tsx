@@ -26,7 +26,7 @@ export function Footer() {
               <li><Link href="/citizen" className="hover:text-cyan-300 transition-colors">Citizen Scam Shield</Link></li>
               <li><Link href="/shops" className="hover:text-cyan-300 transition-colors">Shop Counter Armor</Link></li>
               <li><Link href="/factory" className="hover:text-cyan-300 transition-colors">Factory & Code Guard</Link></li>
-              <li><Link href="/dashboard" className="hover:text-cyan-300 transition-colors">Threat Database Telemetry</Link></li>
+              <li><Link href="/dashboard" className="hover:text-cyan-300 transition-colors">Threat Telemetry Hub</Link></li>
             </ul>
           </div>
 

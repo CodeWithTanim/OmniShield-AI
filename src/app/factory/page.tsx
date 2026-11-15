@@ -156,7 +156,7 @@ def machine_control():
                     <span>Scan AI-Written Code Before Deployment</span>
                   </CardTitle>
                   <Badge variant="outline" className="text-[10px]">
-                    STATIC ANALYSIS
+                    SECURITY AUDIT
                   </Badge>
                 </div>
                 <CardDescription>
