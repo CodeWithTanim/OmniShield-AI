@@ -13,7 +13,10 @@ export function PwaInstallPrompt() {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/sw.js")
-        .then(() => console.log("OmniShield PWA Service Worker Registered"))
+        .then((reg) => {
+          reg.update();
+          console.log("OmniShield PWA Service Worker Registered & Updated");
+        })
         .catch((err) => console.warn("PWA SW registration:", err));
     }
 
