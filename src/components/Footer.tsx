@@ -13,7 +13,7 @@ export function Footer() {
               <span>OmniShield AI</span>
             </div>
             <p className="max-w-md text-slate-400 text-xs leading-relaxed">
-              Real-world cyber safety platform for VibeX Codes Track 3: Protecting regular citizens, shopkeepers, and manufacturing factories from AI voice clones, fake UPI collect traps, QR tampering, and industrial vulnerabilities.
+              Unified cyber safety intelligence platform engineered to protect citizens, retail shopkeepers, and industrial enterprises from AI voice cloning, payment fraud traps, QR tampering, and operational security threats.
             </p>
             <div className="pt-2 text-[11px] text-slate-500">
               Emergency Cybercrime Helpline: <span className="font-mono font-bold text-cyan-400">1930</span> • Portal: <a href="https://cybercrime.gov.in" target="_blank" rel="noreferrer" className="underline hover:text-cyan-300">cybercrime.gov.in</a>
@@ -41,7 +41,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-4 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-slate-500">
-          <p>© 2026 OmniShield AI • Public Cyber Safety Platform</p>
+          <p>© 2026 OmniShield AI • Enterprise Cyber Safety Platform</p>
           <p className="flex items-center gap-1">
             Engineered with <Heart className="h-3 w-3 text-rose-500 fill-rose-500" /> by Team VenoX
           </p>

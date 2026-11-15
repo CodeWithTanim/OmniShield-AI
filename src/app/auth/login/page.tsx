@@ -124,7 +124,7 @@ export default function LoginPage() {
             <div className="relative flex py-1 items-center">
               <div className="flex-grow border-t border-slate-800"></div>
               <span className="flex-shrink mx-2 text-[10px] text-slate-500 uppercase tracking-wider">
-                Or Judge / Fast Access
+                Instant Demo Access
               </span>
               <div className="flex-grow border-t border-slate-800"></div>
             </div>
