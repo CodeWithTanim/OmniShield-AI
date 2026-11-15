@@ -9,15 +9,34 @@ export function PwaInstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
-    // Register service worker if in browser
+    // Unregister service worker and clear stale caches on localhost to prevent CSS FOUC
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .then((reg) => {
-          reg.update();
-          console.log("OmniShield PWA Service Worker Registered & Updated");
-        })
-        .catch((err) => console.warn("PWA SW registration:", err));
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const reg of registrations) {
+            reg.unregister();
+            console.log("Unregistered dev service worker to preserve clean styles");
+          }
+        });
+        if ("caches" in window) {
+          caches.keys().then((keys) => {
+            for (const key of keys) {
+              caches.delete(key);
+            }
+          });
+        }
+      } else {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then((reg) => {
+            reg.update();
+            console.log("OmniShield PWA Service Worker Registered & Updated");
+          })
+          .catch((err) => console.warn("PWA SW registration:", err));
+      }
     }
 
     const handleBeforeInstall = (e: Event) => {
