@@ -32,12 +32,13 @@ export function VoiceSpeakerButton({
       stopScamAlertAudio();
       setIsPlaying(false);
     } else {
-      const success = playScamAlertAudio({ text, lang });
+      const success = playScamAlertAudio({
+        text,
+        lang,
+        onEnd: () => setIsPlaying(false),
+      });
       if (success) {
         setIsPlaying(true);
-        // Reset state after approximate audio length
-        const duration = Math.min(12000, Math.max(3000, text.length * 80));
-        setTimeout(() => setIsPlaying(false), duration);
       }
     }
   };
