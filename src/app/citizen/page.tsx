@@ -1,0 +1,504 @@
+"use client";
+
+import React, { useState } from "react";
+import {
+  Users,
+  Mic,
+  AlertTriangle,
+  ShieldCheck,
+  ShieldAlert,
+  Volume2,
+  CheckCircle2,
+  Radio,
+  ArrowRight,
+  Sparkles,
+  PhoneCall,
+  CreditCard,
+} from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { VoiceSpeakerButton } from "@/components/VoiceSpeakerButton";
+import { SupportedLanguage } from "@/lib/speech";
+
+export default function CitizenShieldPage() {
+  const [activeTab, setActiveTab] = useState("voice");
+  const [language, setLanguage] = useState<SupportedLanguage>("hi");
+
+  // Voice State
+  const [transcript, setTranscript] = useState("");
+  const [voiceLoading, setVoiceLoading] = useState(false);
+  const [voiceResult, setVoiceResult] = useState<any>(null);
+
+  // UPI State
+  const [upiInput, setUpiInput] = useState("");
+  const [upiLoading, setUpiLoading] = useState(false);
+  const [upiResult, setUpiResult] = useState<any>(null);
+
+  // Demo Scenarios
+  const voiceDemos = [
+    {
+      title: "AI Voice Clone Emergency (Papa Scam)",
+      text: "Papa, main bohot badi musibat mein phas gaya hoon. Mera accident ho gaya hai aur police mujhe jail le ja rahi hai. Please kisi ko mat batana aur turant is account mein 50,000 rupees bhej do varna case ho jayega!",
+    },
+    {
+      title: "Digital Arrest (Fake Police/CBI)",
+      text: "This is Inspector Sharma from Central Crime Branch. A consignment containing narcotics has been intercepted with your Aadhaar number. Transfer ₹75,000 to RBI secure escrow account immediately for clearance or team will reach your home.",
+    },
+    {
+      title: "Normal Legitimate Call",
+      text: "Hey, are you free this evening? Mom asked to bring some fresh milk and vegetables while coming back from office. Let me know when you reach.",
+    },
+  ];
+
+  const upiDemos = [
+    {
+      title: "Fake OLX Advance (Collect Request Trap)",
+      text: "upi://pay?pa=refund-agent99@okhdfcbank&pn=OLX%20Cashback%20Agent&am=15000&cu=INR&tn=Cashback%20Approval%20Enter%20PIN",
+    },
+    {
+      title: "SMS: 'Enter PIN to Receive ₹8,500'",
+      text: "Dear Customer, you have received ₹8,500 government subsidy reward! Click link or approve collect request in PhonePe and enter your UPI PIN to claim amount immediately into bank.",
+    },
+    {
+      title: "Legitimate Merchant UPI",
+      text: "upi://pay?pa=supermart.billing@icici&pn=City%20Supermarket&am=640&cu=INR&tn=Invoice%204921",
+    },
+  ];
+
+  const handleAnalyzeVoice = async (textToScan: string) => {
+    if (!textToScan.trim()) return;
+    setVoiceLoading(true);
+    setVoiceResult(null);
+
+    try {
+      const res = await fetch("/api/analyze/voice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ transcript: textToScan, language }),
+      });
+      const data = await res.json();
+      setVoiceResult(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setVoiceLoading(false);
+    }
+  };
+
+  const handleAnalyzeUpi = async (payloadToScan: string) => {
+    if (!payloadToScan.trim()) return;
+    setUpiLoading(true);
+    setUpiResult(null);
+
+    try {
+      const res = await fetch("/api/analyze/upi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ upiString: payloadToScan, language }),
+      });
+      const data = await res.json();
+      setUpiResult(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUpiLoading(false);
+    }
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8 sm:px-6 max-w-6xl space-y-8">
+      {/* Header Banner */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-semibold text-cyan-300 mb-2">
+            <Users className="h-3.5 w-3.5" />
+            <span>Pillar 1: Citizen & Worker Protection</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Citizen Scam Shield
+          </h1>
+          <p className="mt-1 text-sm text-slate-400 max-w-2xl">
+            Detect AI-cloned distress voice calls and deceptive UPI "Collect Money" debit traps. Instant audible voice warnings in Hindi, Bengali, or English.
+          </p>
+        </div>
+
+        {/* Language Selector for Voice Alert */}
+        <div className="flex items-center gap-2 rounded-xl border border-slate-800 bg-[#080D1B] p-1.5 self-start md:self-auto">
+          <span className="text-xs text-slate-400 pl-2">Voice Alert:</span>
+          {(["hi", "bn", "en"] as SupportedLanguage[]).map((l) => (
+            <button
+              key={l}
+              onClick={() => setLanguage(l)}
+              className={`rounded-lg px-2.5 py-1 text-xs font-semibold uppercase transition-colors ${
+                language === l
+                  ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              {l === "hi" ? "Hindi (हिंदी)" : l === "bn" ? "Bengali (বাংলা)" : "English"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 max-w-md">
+          <TabsTrigger value="voice" className="gap-2">
+            <Mic className="h-4 w-4" />
+            <span>AI Voice & Call Scams</span>
+          </TabsTrigger>
+          <TabsTrigger value="upi" className="gap-2">
+            <CreditCard className="h-4 w-4" />
+            <span>UPI Collect & QR Traps</span>
+          </TabsTrigger>
+        </TabsList>
+
+        {/* TAB 1: AI VOICE DEEPFAKE SCANNER */}
+        <TabsContent value="voice" className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-12">
+            {/* Input Card */}
+            <Card className="lg:col-span-6">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <PhoneCall className="h-4 w-4 text-cyan-400" />
+                    <span>Analyze Suspicious Call or Message</span>
+                  </CardTitle>
+                  <Badge variant="outline" className="font-mono text-[10px]">
+                    REAL-TIME NLP
+                  </Badge>
+                </div>
+                <CardDescription>
+                  Paste the transcript of a distress phone call or WhatsApp audio message. Scammers frequently clone family voices to create panic.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {/* Pre-loaded Scenarios */}
+                <div className="space-y-1.5">
+                  <span className="text-xs font-semibold text-slate-400">Load Demo Scenario:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {voiceDemos.map((demo, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          setTranscript(demo.text);
+                          handleAnalyzeVoice(demo.text);
+                        }}
+                        className="rounded-lg border border-slate-800 bg-[#080D1B] px-2.5 py-1 text-left text-xs text-slate-300 hover:border-cyan-500/40 hover:text-cyan-300 transition-colors"
+                      >
+                        {demo.title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <textarea
+                    rows={5}
+                    value={transcript}
+                    onChange={(e) => setTranscript(e.target.value)}
+                    placeholder="Paste incoming call transcript (e.g., 'Papa I am in trouble, send money right now...')"
+                    className="w-full rounded-lg border border-slate-700 bg-[#080D1B] p-3 text-sm text-slate-100 placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setTranscript("");
+                      setVoiceResult(null);
+                    }}
+                  >
+                    Clear
+                  </Button>
+                  <Button
+                    onClick={() => handleAnalyzeVoice(transcript)}
+                    disabled={voiceLoading || !transcript.trim()}
+                    className="gap-2"
+                  >
+                    <ShieldAlert className="h-4 w-4" />
+                    <span>{voiceLoading ? "Analyzing Audio Signals..." : "Detect Deepfake / Scam"}</span>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Verdict Card */}
+            <Card className="lg:col-span-6">
+              <CardHeader>
+                <CardTitle className="text-base">Scam & Deepfake Verdict</CardTitle>
+                <CardDescription>
+                  AI analysis of voice synthesis artifacts, emotional urgency cues, and distress coercion.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {!voiceResult ? (
+                  <div className="flex flex-col items-center justify-center py-16 text-center text-slate-400 space-y-3">
+                    <Radio className="h-10 w-10 text-slate-600 animate-pulse" />
+                    <p className="text-sm">No call analyzed yet.</p>
+                    <p className="text-xs text-slate-500 max-w-sm">
+                      Select a demo scenario on the left or paste transcript text to inspect AI synthesis confidence and listen to the audible warning.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-5">
+                    {/* Gauge Box */}
+                    <div className="flex items-center justify-between rounded-xl border border-slate-800 bg-[#080D1B] p-4">
+                      <div>
+                        <div className="text-xs text-slate-400">Deepfake / AI Scam Risk</div>
+                        <div className="text-2xl font-black text-cyan-400 font-mono mt-0.5">
+                          {voiceResult.deepfakeProbability}%
+                        </div>
+                      </div>
+                      <Badge
+                        variant={
+                          voiceResult.verdict === "AI_CLONED_SCAM_VOICE" ? "destructive" : "success"
+                        }
+                        className="text-xs px-3 py-1 uppercase"
+                      >
+                        {voiceResult.verdict === "AI_CLONED_SCAM_VOICE"
+                          ? "CRITICAL: AI VOICE CLONE"
+                          : "PROBABLY LEGITIMATE"}
+                      </Badge>
+                    </div>
+
+                    {/* Audible Warning Speaker Box */}
+                    <div className="rounded-xl border border-rose-500/40 bg-rose-950/20 p-4 space-y-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 text-rose-300 font-semibold text-xs">
+                          <Volume2 className="h-4 w-4 text-rose-400" />
+                          <span>Emergency Spoken Alert ({language.toUpperCase()})</span>
+                        </div>
+                        <VoiceSpeakerButton
+                          text={voiceResult.spokenWarning}
+                          lang={language}
+                          label="Speak Alert Out Loud"
+                        />
+                      </div>
+                      <p className="text-xs font-mono text-rose-200 bg-[#080D1B]/80 p-2.5 rounded-lg border border-rose-500/30">
+                        "{voiceResult.spokenWarning}"
+                      </p>
+                    </div>
+
+                    {/* Detected Patterns */}
+                    {voiceResult.detectedPatterns?.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="text-xs font-semibold text-slate-400">Detected Indicators:</div>
+                        <ul className="space-y-1.5 text-xs text-slate-300">
+                          {voiceResult.detectedPatterns.map((pat: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <AlertTriangle className="h-3.5 w-3.5 text-amber-400 mt-0.5 shrink-0" />
+                              <span>{pat}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Recommended Safe Steps */}
+                    <div className="space-y-2 border-t border-slate-800 pt-3">
+                      <div className="text-xs font-semibold text-slate-400">Immediate Safe Action:</div>
+                      <ul className="space-y-1 text-xs text-emerald-300">
+                        {voiceResult.recommendations?.map((rec: string, idx: number) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 mt-0.5 shrink-0" />
+                            <span>{rec}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+
+        {/* TAB 2: UPI TRICK SCAM DETECTOR */}
+        <TabsContent value="upi" className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-12">
+            {/* Input Card */}
+            <Card className="lg:col-span-6">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <CreditCard className="h-4 w-4 text-cyan-400" />
+                    <span>Scan UPI Link, QR Code or SMS</span>
+                  </CardTitle>
+                  <Badge variant="outline" className="font-mono text-[10px]">
+                    INTENT DECODER
+                  </Badge>
+                </div>
+                <CardDescription>
+                  Scammers trick victims into entering their UPI PIN under the lie that PIN is required to "receive" payments or claim prizes.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-semibold text-slate-400">Load UPI Demo:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {upiDemos.map((demo, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          setUpiInput(demo.text);
+                          handleAnalyzeUpi(demo.text);
+                        }}
+                        className="rounded-lg border border-slate-800 bg-[#080D1B] px-2.5 py-1 text-left text-xs text-slate-300 hover:border-cyan-500/40 hover:text-cyan-300 transition-colors"
+                      >
+                        {demo.title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <textarea
+                    rows={4}
+                    value={upiInput}
+                    onChange={(e) => setUpiInput(e.target.value)}
+                    placeholder="Paste upi:// link, QR string, or payment SMS..."
+                    className="w-full rounded-lg border border-slate-700 bg-[#080D1B] p-3 font-mono text-xs text-slate-100 placeholder:text-slate-500 focus:border-cyan-500 focus:outline-none"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setUpiInput("");
+                      setUpiResult(null);
+                    }}
+                  >
+                    Clear
+                  </Button>
+                  <Button
+                    onClick={() => handleAnalyzeUpi(upiInput)}
+                    disabled={upiLoading || !upiInput.trim()}
+                    className="gap-2"
+                  >
+                    <ShieldAlert className="h-4 w-4" />
+                    <span>{upiLoading ? "Inspecting UPI URI..." : "Check UPI Trap"}</span>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Verdict Card */}
+            <Card className="lg:col-span-6">
+              <CardHeader>
+                <CardTitle className="text-base">UPI Intent & Threat Verdict</CardTitle>
+                <CardDescription>
+                  Verifies whether the transaction sends money OUT (Debit) or into your account.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {!upiResult ? (
+                  <div className="flex flex-col items-center justify-center py-16 text-center text-slate-400 space-y-3">
+                    <CreditCard className="h-10 w-10 text-slate-600 animate-pulse" />
+                    <p className="text-sm">No UPI link scanned yet.</p>
+                    <p className="text-xs text-slate-500 max-w-sm">
+                      Select a demo sample above to test how OmniShield AI warns you before entering any PIN.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-5">
+                    {/* Warning Header Box */}
+                    <div
+                      className={`rounded-xl border p-4 ${
+                        upiResult.isDangerous
+                          ? "border-rose-500/40 bg-rose-950/20 text-rose-200"
+                          : "border-emerald-500/40 bg-emerald-950/20 text-emerald-200"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="font-bold text-sm flex items-center gap-2">
+                          <AlertTriangle className="h-4 w-4" />
+                          <span>
+                            {upiResult.isDangerous
+                              ? "DANGER: DEBIT TRAP DETECTED!"
+                              : "NORMAL PAYMENT INTENT"}
+                          </span>
+                        </div>
+                        <Badge
+                          variant={upiResult.isDangerous ? "destructive" : "success"}
+                          className="font-mono text-xs"
+                        >
+                          Scam Score: {upiResult.scamScore}/100
+                        </Badge>
+                      </div>
+
+                      {/* Golden Rule Highlight */}
+                      <div className="mt-3 rounded-lg bg-[#080D1B] p-2.5 text-xs font-semibold text-amber-300 border border-amber-500/30">
+                        {upiResult.goldenRule}
+                      </div>
+                    </div>
+
+                    {/* Audio Alert Box */}
+                    <div className="rounded-xl border border-slate-800 bg-[#080D1B] p-3.5 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-semibold text-slate-300">
+                          Audible Warning ({language.toUpperCase()})
+                        </span>
+                        <VoiceSpeakerButton
+                          text={upiResult.spokenWarning}
+                          lang={language}
+                          label="Speak Alert"
+                        />
+                      </div>
+                      <p className="text-xs font-mono text-slate-300 italic">
+                        "{upiResult.spokenWarning}"
+                      </p>
+                    </div>
+
+                    {/* Decoded Parameters */}
+                    {upiResult.payeeVpa && (
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="rounded-lg border border-slate-800 bg-[#080D1B] p-2.5">
+                          <div className="text-slate-400">Payee VPA:</div>
+                          <div className="font-mono font-semibold text-cyan-300 break-all">
+                            {upiResult.payeeVpa}
+                          </div>
+                        </div>
+                        <div className="rounded-lg border border-slate-800 bg-[#080D1B] p-2.5">
+                          <div className="text-slate-400">Amount:</div>
+                          <div className="font-mono font-semibold text-white">
+                            {upiResult.amount ? `₹${upiResult.amount}` : "Dynamic / Unspecified"}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Suspicious Indicators */}
+                    {upiResult.suspiciousIndicators?.length > 0 && (
+                      <div className="space-y-1.5">
+                        <div className="text-xs font-semibold text-slate-400">Why this was flagged:</div>
+                        <ul className="space-y-1 text-xs text-rose-300">
+                          {upiResult.suspiciousIndicators.map((ind: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="h-1.5 w-1.5 rounded-full bg-rose-500 mt-1.5 shrink-0" />
+                              <span>{ind}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
