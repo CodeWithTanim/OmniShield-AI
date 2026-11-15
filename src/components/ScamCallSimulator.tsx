@@ -33,6 +33,9 @@ interface ScamScenario {
   callerName: string;
   callerNumber: string;
   transcript: string;
+  transcriptBn?: string;
+  transcriptHi?: string;
+  transcriptEn?: string;
   spokenWarningBn: string;
   spokenWarningHi: string;
   spokenWarningEn: string;
@@ -49,6 +52,12 @@ const SCENARIOS: ScamScenario[] = [
     callerNumber: "+91 11-2436-8900 (Spoofed Official)",
     transcript:
       "Aapke Aadhaar card se 24 fake bank accounts khol kar 5 crore ka money laundering hua hai! Supreme Court ka digital arrest warrant issue hua hai. Turant camera on karke verification security deposit transfer karein!",
+    transcriptBn:
+      "আপনার জাতীয় পরিচয়পত্র ব্যবহার করে ২৪টি ভুয়া ব্যাংক অ্যাকাউন্টে ৫ কোটি টাকার মানি লন্ডারিং করা হয়েছে! সুপ্রিম কোর্টের ডিজিটাল অ্যারেস্ট ওয়ারেন্ট জারি হয়েছে। অবিলম্বে ক্যামেরা অন করে ভেরিফিকেশন ডিপোজিট পাঠান!",
+    transcriptHi:
+      "आपके आधार कार्ड से 24 फर्जी बैंक खाते खोलकर 5 करोड़ की मनी लॉन्ड्रिंग हुई है! सुप्रीम कोर्ट का डिजिटल अरेस्ट वारंट जारी हुआ है। तुरंत कैमरा ऑन करके वेरिफिकेशन राशि ट्रांसफर करें!",
+    transcriptEn:
+      "Twenty-four fake bank accounts have been opened under your ID for five crore money laundering! Supreme Court has issued an online Digital Arrest warrant. Turn on your camera and transfer verification fees immediately!",
     spokenWarningBn:
       "সাবধান! এটি একটি সম্পূর্ণ অবৈধ ডিজিটাল অ্যারেস্ট ফ্রড! ভারতের বা বাংলাদেশের কোনো আইন শৃঙ্খলা রক্ষাকারী বাহিনী ভিডিও কলে ডিজিটাল অ্যারেস্ট করতে পারে না। অবিলম্বে কলটি কেটে ১৯৩০ হেল্পলাইনে জানান!",
     spokenWarningHi:
@@ -69,11 +78,17 @@ const SCENARIOS: ScamScenario[] = [
     callerName: "Arjun (Son) — Unknown Device",
     callerNumber: "+91 98210-44912 (Unrecognized)",
     transcript:
-      "Papa! Meri car ka bohot bada accident ho gaya hai, ek aadmi hospital mein hai! Police mujhe pakadne waali hai, doctor operation ke liye turant ₹50,000 maang raha hai, please jaldi bhejo!",
+      "Papa! Meri car ka bohot bada accident ho gaya hai, ek aadmi hospital mein hai! Police mujhe pakadne waali hai, doctor operation ke liye turant pachas hazar rupaye maang raha hai, please jaldi bhejo!",
+    transcriptBn:
+      "বাবা! আমার গাড়ির ভীষণ বড় অ্যাক্সিডেন্ট হয়েছে, একজন হাসপাতালে ভর্তি! পুলিশ আমাকে ধরতে আসছে, ডাক্তার অপারেশনের জন্য এখনই ৫০ হাজার টাকা চাইছে, প্লিজ জলদি টাকা পাঠাও!",
+    transcriptHi:
+      "पापा! मेरी कार का बहुत बड़ा एक्सीडेंट हो गया है, एक आदमी अस्पताल में है! पुलिस मुझे पकड़ने वाली है, डॉक्टर ऑपरेशन के लिए तुरंत पचास हजार रुपये मांग रहा है, प्लीज जल्दी पैसे भेजो!",
+    transcriptEn:
+      "Dad! My car had a major accident, a person is in the hospital! Police are about to arrest me, the doctor urgently needs fifty thousand for emergency surgery, please send money quickly!",
     spokenWarningBn:
       "সতর্কবার্তা! এটি ৩-সেকেন্ড এআই ভয়েস ক্লোন প্রতারণা! ভয়েস ফ্রিকোয়েন্সিতে কৃত্রিম সিন্থেটিক আর্টিফ্যাক্ট পাওয়া গেছে। টাকা পাঠানোর আগে পরিবারের সদস্যকে অন্য নম্বরে ফোন করে যাচাই করুন!",
     spokenWarningHi:
-      "सतर्कता! यह एआई वॉइस क्लोन फ्रॉड है! ऑडियो में वॉयस सिंथेसिस आर्टिफैक्ट्स पाए गए हैं। तुरंत अपने परिजन के निजी नंबर पर कॉल करके पुष्टि करें!",
+      "सतर्कता! यह एআই वॉइस क्लोन फ्रॉड है! ऑडियो में वॉयस सिंथेसिस आर्टिफैक्ट्स पाए गए हैं। तुरंत अपने परिजन के निजी नंबर पर कॉल करके पुष्टि करें!",
     spokenWarningEn:
       "Alert! AI Voice Clone detected with 96% synthetic confidence. Vocoder pitch variance is flat. Do NOT transfer money; call family members on their known numbers directly!",
     threatVerdict: "AI VOICE CLONE EXTORTION TRAP",
@@ -90,6 +105,12 @@ const SCENARIOS: ScamScenario[] = [
     callerName: "Electricity Board Helpline",
     callerNumber: "WBSEDCL / Power Desk Alert",
     transcript:
+      "Dear Consumer, your power supply will be disconnected tonight at 9:30 PM due to unpaid bill. Update bill immediately by downloading our officer verification APK file.",
+    transcriptBn:
+      "প্রিয় গ্রাহক, বকেয়া বিলের কারণে আজ রাত ৯:৩০ টায় আপনার বিদ্যুৎ সংযোগ বিচ্ছিন্ন করা হবে। লাইন চালু রাখতে অবিলম্বে আমাদের অফিসারের এপিকে ফাইল ডাউনলোড করে আপডেট করুন।",
+    transcriptHi:
+      "प्रिय उपभोक्ता, बकाया बिल के कारण आज रात 9:30 बजे आपका बिजली कनेक्शन काट दिया जाएगा। तुरंत हमारे अधिकारी एपीকে ফাইল को डाउनलोड करके बिल अपडेट करें।",
+    transcriptEn:
       "Dear Consumer, your power supply will be disconnected tonight at 9:30 PM due to unpaid bill. Update bill immediately by downloading our officer verification APK file.",
     spokenWarningBn:
       "সতর্ক থাকুন! বিদ্যুৎ বিল প্রতারণা! বিদ্যুৎ দপ্তর কখনো এপিকে (APK) ফাইল ডাউনলোড করে বিল জমা দিতে বলে না। এই ফাইলটি মোবাইলে পাসওয়ার্ড চুরির ম্যালওয়্যার!",
@@ -132,6 +153,52 @@ export function ScamCallSimulator({
   const animFrameRef = useRef<number | null>(null);
   const timerIntervalRef = useRef<any>(null);
   const ringAudioTimeoutRef = useRef<any>(null);
+  const scammerAudioRef = useRef<HTMLAudioElement | null>(null);
+  const alertAudioRef = useRef<HTMLAudioElement | null>(null);
+  const typeIntervalRef = useRef<any>(null);
+
+  const stopAllCallAudio = () => {
+    stopAllSounds();
+    if (scammerAudioRef.current) {
+      scammerAudioRef.current.pause();
+      scammerAudioRef.current.currentTime = 0;
+      scammerAudioRef.current = null;
+    }
+    if (alertAudioRef.current) {
+      alertAudioRef.current.pause();
+      alertAudioRef.current.currentTime = 0;
+      alertAudioRef.current = null;
+    }
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const playScammerSpeech = (text: string, lang: "hi" | "bn" | "en") => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+    if (scammerAudioRef.current) {
+      scammerAudioRef.current.pause();
+      scammerAudioRef.current = null;
+    }
+
+    const langCode = lang === "bn" ? "bn-IN" : lang === "hi" ? "hi-IN" : "en-US";
+    const audioUrl = `/api/tts?text=${encodeURIComponent(text.slice(0, 190))}&lang=${lang}`;
+
+    const audio = new Audio(audioUrl);
+    scammerAudioRef.current = audio;
+    audio.playbackRate = 1.05;
+
+    audio.play().catch(() => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = langCode;
+        utter.rate = 1.05;
+        window.speechSynthesis.speak(utter);
+      }
+    });
+  };
 
   // Clean state when modal opens
   useEffect(() => {
@@ -140,7 +207,7 @@ export function ScamCallSimulator({
       setCallTimer(0);
       setScanProgress(0);
       setTypedTranscript("");
-      stopAllSounds();
+      stopAllCallAudio();
     } else {
       handleEndCall();
     }
@@ -201,6 +268,7 @@ export function ScamCallSimulator({
 
   // Handle ringing simulation
   const handleStartRinging = () => {
+    stopAllCallAudio();
     setCallState("ringing");
     setCallTimer(0);
     setScanProgress(0);
@@ -210,7 +278,7 @@ export function ScamCallSimulator({
 
   // Accept call action
   const handleAcceptCall = () => {
-    stopAllSounds();
+    stopAllCallAudio();
     setCallState("in-call");
     setCallTimer(0);
     setScanProgress(15);
@@ -220,17 +288,28 @@ export function ScamCallSimulator({
       setCallTimer((prev) => prev + 1);
     }, 1000);
 
-    // Type out the scammer speech progressively
-    const fullText = selectedScenario.transcript;
+    // Get active transcript matching the user's selected language
+    const activeTranscript =
+      audioLang === "bn"
+        ? (selectedScenario.transcriptBn || selectedScenario.transcript)
+        : audioLang === "hi"
+        ? (selectedScenario.transcriptHi || selectedScenario.transcript)
+        : (selectedScenario.transcriptEn || selectedScenario.transcript);
+
+    // Real-time caller voice speech out loud!
+    playScammerSpeech(activeTranscript, audioLang);
+
+    // Progressive live transcript typing synchronized with speech
     let charIdx = 0;
-    const typeInterval = setInterval(() => {
-      if (charIdx < fullText.length) {
-        setTypedTranscript(fullText.substring(0, charIdx + 3));
-        charIdx += 3;
+    if (typeIntervalRef.current) clearInterval(typeIntervalRef.current);
+    typeIntervalRef.current = setInterval(() => {
+      if (charIdx < activeTranscript.length) {
+        setTypedTranscript(activeTranscript.substring(0, charIdx + 2));
+        charIdx += 2;
       } else {
-        clearInterval(typeInterval);
+        clearInterval(typeIntervalRef.current);
       }
-    }, 50);
+    }, 60);
 
     // Progress bar milestones:
     setTimeout(() => {
@@ -239,16 +318,26 @@ export function ScamCallSimulator({
 
     setTimeout(() => {
       setScanProgress(75);
-    }, 2400);
+    }, 2600);
 
-    // After 3.8s, trigger the RED STROBE ALERT
+    // After 4.5s, cut off scammer voice and trigger RED STROBE ALERT
     setTimeout(() => {
       setScanProgress(98);
       triggerScamAlert();
-    }, 3800);
+    }, 4500);
   };
 
   const triggerScamAlert = () => {
+    // Cut off incoming scammer voice immediately
+    if (scammerAudioRef.current) {
+      scammerAudioRef.current.pause();
+      scammerAudioRef.current.currentTime = 0;
+      scammerAudioRef.current = null;
+    }
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
     setCallState("alert");
     playSirenAlert(2600);
 
@@ -268,8 +357,9 @@ export function ScamCallSimulator({
 
     // Try server-side TTS first
     const langCode = lang === "bn" ? "bn-IN" : lang === "hi" ? "hi-IN" : "en-US";
-    const audioUrl = `/api/tts?text=${encodeURIComponent(text)}&lang=${langCode}`;
+    const audioUrl = `/api/tts?text=${encodeURIComponent(text.slice(0, 190))}&lang=${lang}`;
     const audio = new Audio(audioUrl);
+    alertAudioRef.current = audio;
 
     audio.onended = () => setIsAudioPlaying(false);
     audio.onerror = () => {
@@ -296,12 +386,10 @@ export function ScamCallSimulator({
   };
 
   const handleEndCall = () => {
-    stopAllSounds();
+    stopAllCallAudio();
     if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
     if (ringAudioTimeoutRef.current) clearTimeout(ringAudioTimeoutRef.current);
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-    }
+    if (typeIntervalRef.current) clearInterval(typeIntervalRef.current);
     setCallState("ended");
     setIsAudioPlaying(false);
   };
@@ -369,7 +457,7 @@ export function ScamCallSimulator({
           <div className="mt-4 space-y-4">
             <div>
               <label className="text-xs font-semibold text-slate-300 mb-2 block">
-                Select Scam Attack Scenario for Judges:
+                Select Real-World Scam Attack Scenario:
               </label>
               <div className="grid grid-cols-1 gap-2">
                 {SCENARIOS.map((sc) => (
@@ -534,9 +622,22 @@ export function ScamCallSimulator({
             {/* Live Typing Transcript */}
             {callState !== "ringing" && typedTranscript && (
               <div className="mt-3 rounded-xl border border-slate-800 bg-[#080D1D]/70 p-3 text-xs text-slate-300 font-sans leading-relaxed">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1">
-                  Real-time Call Transcript:
-                </span>
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">
+                    Real-time Call Transcript:
+                  </span>
+                  {callState === "in-call" ? (
+                    <span className="inline-flex items-center gap-1.5 text-cyan-400 text-[10px] font-semibold animate-pulse">
+                      <Volume2 className="h-3 w-3" />
+                      Live Caller Voice Playing...
+                    </span>
+                  ) : callState === "alert" ? (
+                    <span className="inline-flex items-center gap-1.5 text-rose-400 text-[10px] font-bold">
+                      <VolumeX className="h-3 w-3" />
+                      Scammer Audio Muted by OmniShield
+                    </span>
+                  ) : null}
+                </div>
                 &quot;{typedTranscript}&quot;
               </div>
             )}
