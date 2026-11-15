@@ -82,7 +82,7 @@
 <div align="center">
 
 <a href="https://youtu.be/tooDqYm0g9k" target="_blank">
-  <img src="https://img.youtube.com/vi/tooDqYm0g9k/maxresdefault.jpg" alt="OmniShield AI — Live Hackathon Video Demo" width="760" style="border-radius: 14px; border: 2px solid #06B6D4; box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);" />
+  <img src="./public/OmniShield-AI_Thumbnail.png" alt="OmniShield AI — Live Hackathon Video Demo" width="760" style="border-radius: 14px; border: 2px solid #06B6D4; box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);" />
 </a>
 
 <br/><br/>
