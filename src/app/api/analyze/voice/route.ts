@@ -14,12 +14,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Advanced heuristic and pattern analyzer for AI Voice Impersonation Scams
+    // Advanced multi-lingual heuristic & pattern analyzer (Devanagari, Bengali, and English)
     const urgentFamilyLures = [
-      /papa|maa|mom|dad|bhai|beta|bache|family|friend/i,
-      /accident|jail|police|arrest|hospital|emergency|kidnap|trouble|phas gaya/i,
-      /urgent|immediately|right now|jaldi|turant|kisi ko mat batana/i,
-      /send money|paise bhejo|rupees|gpay|phonepe|transfer|account number/i,
+      /papa|maa|mom|dad|bhai|beta|bache|family|friend|पापा|पिता|माँ|माता|मम्मी|भाई|बेटा|बेटी|बच्चे|बाबा|মা|ভাই|বোন|ছেলে|মেয়ে/i,
+      /accident|jail|police|arrest|hospital|emergency|kidnap|trouble|phas gaya|custody|cbi|narcotics|drinking|driving|थाना|पुलिस|जेल|अरेस्ट|गिरफ्तार|मुसीबत|फंस गया|फंसा|दुर्घटना|एक्सीडेंट|अस्पताल|सीबीआई|डिजिटल अरेस्ट|कस्टडी|ड्रिंकिंग|गाड़ी|पकड़ लिया|আটক|গ্রেফতার|পুলিশ|জেল|অ্যারেস্ট|হাসপাতাল|অ্যাক্সিডেন্ট|দুর্ঘটনা|বিপদ|ফেঁসে গেছি/i,
+      /urgent|immediately|right now|jaldi|turant|kisi ko mat batana|help me|save me|जल्दी|तुरंत|अभी|मদদ করো|मदद करो|किसी को मत बताना|फौरन|তাড়াতাড়ি|জলদি|এখনই|বাঁচাও/i,
+      /send money|paise bhejo|rupees|gpay|phonepe|transfer|account|lakh|thousand|cash|bail|रुपए|रुपये|पैसे|लाख|लख|हजार|दे दो|भेज दो|ट्रांसफर|खाते|अकाउंट|जमानत|টাকা|পাঠাও|হাজার|বিকাশ/i,
     ];
 
     let matchCount = 0;
@@ -28,10 +28,10 @@ export async function POST(req: NextRequest) {
     urgentFamilyLures.forEach((regex, index) => {
       if (regex.test(text)) {
         matchCount++;
-        if (index === 0) detectedPatterns.push("Family/Friend impersonation keywords");
-        if (index === 1) detectedPatterns.push("Extreme artificial emergency/distress cue (accident/police)");
-        if (index === 2) detectedPatterns.push("High-urgency time pressure (right now / jaldi)");
-        if (index === 3) detectedPatterns.push("Direct demand for immediate money transfer");
+        if (index === 0) detectedPatterns.push('Family/Friend impersonation keywords ("Papa" / "Baba" / "Mom")');
+        if (index === 1) detectedPatterns.push('Extreme artificial emergency/distress cue ("Police" / "Pakad liya" / "Accident")');
+        if (index === 2) detectedPatterns.push('High-urgency time pressure ("Jaldi" / "Turant" / "Madad karo")');
+        if (index === 3) detectedPatterns.push('Direct demand for immediate money transfer ("Rupees" / "Taka" / "Transfer")');
       }
     });
 
