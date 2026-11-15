@@ -12,13 +12,18 @@
   <a href="https://omnishield-ai-eight.vercel.app/" target="_blank">
     <img src="https://img.shields.io/badge/LIVE_PRODUCTION-https%3A%2F%2Fomnishield--ai--eight.vercel.app-00FF66?style=for-the-badge&logo=vercel&logoColor=black" alt="Live Deployment on Vercel" />
   </a>
+  &nbsp;
+  <a href="https://youtu.be/tooDqYm0g9k" target="_blank">
+    <img src="https://img.shields.io/badge/🎥_WATCH_DEMO_VIDEO-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Demo Video on YouTube" />
+  </a>
 </p>
 
 <p align="center">
-  🌐 <strong>Live Production URL:</strong> <a href="https://omnishield-ai-eight.vercel.app/" target="_blank"><strong>https://omnishield-ai-eight.vercel.app/</strong></a>
+  🌐 <strong>Live Production URL:</strong> <a href="https://omnishield-ai-eight.vercel.app/" target="_blank"><strong>https://omnishield-ai-eight.vercel.app/</strong></a> &nbsp;|&nbsp; 🎥 <strong>Video Demo:</strong> <a href="https://youtu.be/tooDqYm0g9k" target="_blank"><strong>https://youtu.be/tooDqYm0g9k</strong></a>
 </p>
 
 <a href="https://omnishield-ai-eight.vercel.app/"><strong>🚀 Launch Live Platform</strong></a> •
+<a href="https://youtu.be/tooDqYm0g9k"><strong>🎥 Watch Demo Video</strong></a> •
 <a href="#-hackathon-organizer--track"><strong>Organizer & Track</strong></a> •
 <a href="#-the-frontline-problem"><strong>Problem Solved</strong></a> •
 <a href="#-system-architecture"><strong>Architecture</strong></a> •
@@ -58,6 +63,7 @@
         <h3>🏆 Official Submission Details</h3>
         <ul>
           <li><strong>Live Production URL:</strong> <a href="https://omnishield-ai-eight.vercel.app/" target="_blank"><strong>https://omnishield-ai-eight.vercel.app/</strong></a></li>
+          <li><strong>🎥 Video Demo Walkthrough:</strong> <a href="https://youtu.be/tooDqYm0g9k" target="_blank"><strong>https://youtu.be/tooDqYm0g9k</strong></a></li>
           <li><strong>Organizer:</strong> VibeX Codes 26 Committee</li>
           <li><strong>Track:</strong> <strong>Track 3 — CYBER SAFETY (Protecting People, Shops & Factories from Scams)</strong></li>
           <li><strong>Project Title:</strong> <strong>OmniShield AI</strong></li>
@@ -67,6 +73,30 @@
       </td>
     </tr>
   </table>
+</div>
+
+---
+
+## 🎥 Live Video Walkthrough & Product Demo
+
+<div align="center">
+
+[![OmniShield AI Video Demo](https://img.shields.io/badge/▶️_Click_To_Watch_Complete_Video_Demo-YouTube_Walkthrough-red?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/tooDqYm0g9k)
+
+<br/><br/>
+
+### 📺 **Watch the 2-Minute Pitch & Technical Demo:**
+👉 **[https://youtu.be/tooDqYm0g9k](https://youtu.be/tooDqYm0g9k)** 👈
+
+<br/>
+
+> 💡 **What’s covered in this demo:**
+> - **Citizen Scam Shield:** Live acoustic interception of 3-second AI Voice Clones and Fake "Digital Arrest" warrants.
+> - **Golden Hour 1-Click Dispute Generator:** Instant drafting of formal 1930 Cybercrime Police FIRs and RBI Master Circular bank account freeze petitions.
+> - **Shop Counter Armor:** Transforming any mobile phone into an AI Counter OmniSoundBox (zero hardware expense) with live camera QR tampering inspection.
+> - **Factory & Code Guard:** Real-time Modbus/BACnet IoT telemetry, 1-click machine emergency kill-switch, and automated AI code security patching.
+> - **South Asia Live Threat Radar:** Real-time active scam outbreak monitoring across Dhaka, Kolkata, Delhi, and Mumbai.
+
 </div>
 
 ---
