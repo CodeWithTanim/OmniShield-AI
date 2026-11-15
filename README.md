@@ -81,12 +81,19 @@
 
 <div align="center">
 
-[![OmniShield AI Video Demo](https://img.shields.io/badge/▶️_Click_To_Watch_Complete_Video_Demo-YouTube_Walkthrough-red?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/tooDqYm0g9k)
+<a href="https://youtu.be/tooDqYm0g9k" target="_blank">
+  <img src="https://img.youtube.com/vi/tooDqYm0g9k/maxresdefault.jpg" alt="OmniShield AI — Live Hackathon Video Demo" width="760" style="border-radius: 14px; border: 2px solid #06B6D4; box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);" />
+</a>
 
 <br/><br/>
 
-### 📺 **Watch the 2-Minute Pitch & Technical Demo:**
-👉 **[https://youtu.be/tooDqYm0g9k](https://youtu.be/tooDqYm0g9k)** 👈
+[![Click to Play Video](https://img.shields.io/badge/▶️_CLICK_TO_WATCH_FULL_DEMO_ON_YOUTUBE-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/tooDqYm0g9k)
+
+<br/>
+
+**🔗 Direct YouTube Link:** [https://youtu.be/tooDqYm0g9k](https://youtu.be/tooDqYm0g9k)
+
+*(Click on the video thumbnail above to watch the complete 2-minute walkthrough on YouTube)*
 
 <br/>
 
