@@ -8,6 +8,17 @@
 
 <br/>
 
+<p align="center">
+  <a href="https://omnishield-ai-eight.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/LIVE_PRODUCTION-https%3A%2F%2Fomnishield--ai--eight.vercel.app-00FF66?style=for-the-badge&logo=vercel&logoColor=black" alt="Live Deployment on Vercel" />
+  </a>
+</p>
+
+<p align="center">
+  🌐 <strong>Live Production URL:</strong> <a href="https://omnishield-ai-eight.vercel.app/" target="_blank"><strong>https://omnishield-ai-eight.vercel.app/</strong></a>
+</p>
+
+<a href="https://omnishield-ai-eight.vercel.app/"><strong>🚀 Launch Live Platform</strong></a> •
 <a href="#-hackathon-organizer--track"><strong>Organizer & Track</strong></a> •
 <a href="#-the-frontline-problem"><strong>Problem Solved</strong></a> •
 <a href="#-system-architecture"><strong>Architecture</strong></a> •
@@ -46,6 +57,7 @@
       <td align="left" style="border-left: 2px solid rgba(6,182,212,0.3); padding: 15px 25px;">
         <h3>🏆 Official Submission Details</h3>
         <ul>
+          <li><strong>Live Production URL:</strong> <a href="https://omnishield-ai-eight.vercel.app/" target="_blank"><strong>https://omnishield-ai-eight.vercel.app/</strong></a></li>
           <li><strong>Organizer:</strong> VibeX Codes 26 Committee</li>
           <li><strong>Track:</strong> <strong>Track 3 — CYBER SAFETY (Protecting People, Shops & Factories from Scams)</strong></li>
           <li><strong>Project Title:</strong> <strong>OmniShield AI</strong></li>
@@ -240,6 +252,8 @@ flowchart TD
 ---
 
 ## 🚀 Quickstart & Local Setup
+
+> 🌐 **Live Evaluation**: You can immediately test the live, fully-functional production app deployed on Vercel at **[https://omnishield-ai-eight.vercel.app/](https://omnishield-ai-eight.vercel.app/)** without any local setup.
 
 ### 1. Clone the Repository
 ```bash

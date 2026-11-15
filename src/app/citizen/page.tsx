@@ -15,6 +15,7 @@ import {
   PhoneCall,
   CreditCard,
   FileText,
+  Link2,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,10 @@ import { LiveVoiceRecorder } from "@/components/LiveVoiceRecorder";
 import { SupportedLanguage } from "@/lib/speech";
 import { generateIncidentPdfReport } from "@/lib/pdfReport";
 import { ScamCallSimulator } from "@/components/ScamCallSimulator";
+import { PhishingLinkScanner } from "@/components/PhishingLinkScanner";
+import { DigitalArrestDocScanner } from "@/components/DigitalArrestDocScanner";
+import { GoldenHourDisputeGenerator } from "@/components/GoldenHourDisputeGenerator";
+import { LiveThreatRadar } from "@/components/LiveThreatRadar";
 
 const getActiveUpiWarning = (res: any, lang: SupportedLanguage) => {
   if (!res) return "";
@@ -183,6 +188,9 @@ export default function CitizenShieldPage() {
         </div>
       </div>
 
+      {/* SOUTH ASIA LIVE CYBER THREAT RADAR */}
+      <LiveThreatRadar />
+
       {/* LIVE STAGE DEMO BANNER FOR JUDGES */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl border border-rose-500/50 bg-gradient-to-r from-rose-950/40 via-[#091026] to-cyan-950/30 shadow-2xl backdrop-blur-md">
         <div className="flex items-center gap-3.5">
@@ -220,14 +228,26 @@ export default function CitizenShieldPage() {
       />
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 max-w-md">
-          <TabsTrigger value="voice" className="gap-2">
-            <Mic className="h-4 w-4" />
-            <span>AI Voice & Call Scams</span>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 max-w-4xl h-auto p-1 gap-1">
+          <TabsTrigger value="voice" className="gap-1.5 text-xs py-2">
+            <Mic className="h-3.5 w-3.5" />
+            <span>AI Voice Scams</span>
           </TabsTrigger>
-          <TabsTrigger value="upi" className="gap-2">
-            <CreditCard className="h-4 w-4" />
-            <span>UPI Collect & QR Traps</span>
+          <TabsTrigger value="upi" className="gap-1.5 text-xs py-2">
+            <CreditCard className="h-3.5 w-3.5" />
+            <span>UPI Collect Traps</span>
+          </TabsTrigger>
+          <TabsTrigger value="phishing" className="gap-1.5 text-xs py-2">
+            <Link2 className="h-3.5 w-3.5" />
+            <span>Phishing Inspector</span>
+          </TabsTrigger>
+          <TabsTrigger value="warrant" className="gap-1.5 text-xs py-2">
+            <FileText className="h-3.5 w-3.5 text-rose-400" />
+            <span>Fake Police Notice</span>
+          </TabsTrigger>
+          <TabsTrigger value="dispute" className="gap-1.5 text-xs py-2">
+            <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+            <span>1930 Golden Hour</span>
           </TabsTrigger>
         </TabsList>
 
@@ -638,6 +658,21 @@ export default function CitizenShieldPage() {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        {/* TAB 3: PHISHING & SMS LINK INSPECTOR */}
+        <TabsContent value="phishing" className="space-y-6">
+          <PhishingLinkScanner language={language} />
+        </TabsContent>
+
+        {/* TAB 4: FAKE DIGITAL ARREST & POLICE NOTICE SCANNER */}
+        <TabsContent value="warrant" className="space-y-6">
+          <DigitalArrestDocScanner language={language} />
+        </TabsContent>
+
+        {/* TAB 5: GOLDEN HOUR 1-CLICK POLICE & BANK DISPUTE GENERATOR */}
+        <TabsContent value="dispute" className="space-y-6">
+          <GoldenHourDisputeGenerator language={language} />
         </TabsContent>
       </Tabs>
     </div>

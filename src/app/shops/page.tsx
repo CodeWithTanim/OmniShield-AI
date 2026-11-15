@@ -21,23 +21,18 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { CameraQrScanner } from "@/components/CameraQrScanner";
 import { OmniSoundBox } from "@/components/OmniSoundBox";
+import { VulnerableQrScanner } from "@/components/VulnerableQrScanner";
 
 export default function ShopArmorPage() {
   const [activeTab, setActiveTab] = useState("whatsapp");
   const [lang, setLang] = useState<"en" | "bn" | "hi">("en");
   const [copied, setCopied] = useState(false);
-  const [showCamera, setShowCamera] = useState(false);
 
   // WhatsApp Alert Generator State
   const [scamSnippet, setScamSnippet] = useState(
     "Customer claiming they paid ₹1,200 via UPI and demanding change, but no bank SMS received."
   );
-
-  // QR Tampering State
-  const [qrPayload, setQrPayload] = useState("");
-  const [qrResult, setQrResult] = useState<any>(null);
 
   // Fake Screenshot Verification State
   const [utrNumber, setUtrNumber] = useState("");
@@ -66,32 +61,6 @@ export default function ShopArmorPage() {
 
   const getWhatsAppLink = () => {
     return `https://wa.me/?text=${encodeURIComponent(getStaffWarningText())}`;
-  };
-
-  const handleVerifyQr = (overridePayload?: string | React.MouseEvent) => {
-    const targetPayload = typeof overridePayload === "string" ? overridePayload : qrPayload;
-    if (!targetPayload.trim()) return;
-    const lower = targetPayload.toLowerCase();
-    const isTampered =
-      lower.includes("bit.ly") ||
-      lower.includes("ngrok") ||
-      lower.includes(".apk") ||
-      lower.includes("free-cash") ||
-      lower.includes("claim-reward");
-
-    setQrResult({
-      payload: targetPayload,
-      isTampered,
-      verdict: isTampered ? "SUSPICIOUS_QR_TAMPERING" : "GENUINE_PAYMENT_QR",
-      riskScore: isTampered ? 88 : 12,
-      recommendations: isTampered
-        ? [
-            "Physical QR sticker may have been swapped or overlaid by a fraudster.",
-            "Inspect shop counter standee physically for extra sticker layers.",
-            "Replace QR immediately with verified bank-issued QR code.",
-          ]
-        : ["QR payload points to standard payment address. Safe to display."],
-    });
   };
 
   const handleVerifyScreenshot = () => {
@@ -246,128 +215,7 @@ export default function ShopArmorPage() {
 
         {/* TAB 2: QR CODE TAMPERING INSPECTOR */}
         <TabsContent value="qr" className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-12">
-            <Card className="lg:col-span-6">
-              <CardHeader>
-                <CardTitle className="text-base flex items-center gap-2">
-                  <QrCode className="h-4 w-4 text-cyan-400" />
-                  <span>Inspect Physical Shop QR Payload</span>
-                </CardTitle>
-                <CardDescription>
-                  Criminals paste fake QR stickers on tea stalls and counters to divert merchant earnings to rogue accounts or malware APK downloads.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Live Camera Scanner Trigger */}
-                <Button
-                  type="button"
-                  variant="cyber"
-                  onClick={() => setShowCamera(true)}
-                  className="w-full gap-2 shadow-lg shadow-cyan-500/20"
-                >
-                  <Camera className="h-4 w-4 text-cyan-300 animate-pulse" />
-                  <span>📸 Open Live Counter Camera QR Scanner</span>
-                </Button>
-
-                <CameraQrScanner
-                  isOpen={showCamera}
-                  onClose={() => setShowCamera(false)}
-                  onScanSuccess={(decodedText) => {
-                    setQrPayload(decodedText);
-                    handleVerifyQr(decodedText);
-                  }}
-                />
-
-                <div className="relative flex py-1 items-center">
-                  <div className="flex-grow border-t border-slate-800"></div>
-                  <span className="flex-shrink mx-2 text-[10px] text-slate-500 uppercase tracking-wider">
-                    Or Enter QR String Manually
-                  </span>
-                  <div className="flex-grow border-t border-slate-800"></div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-400">Paste QR Decoded URL or String:</label>
-                  <Input
-                    value={qrPayload}
-                    onChange={(e) => setQrPayload(e.target.value)}
-                    placeholder="https://bit.ly/claim-free-cashback or upi://pay?pa=..."
-                  />
-                </div>
-
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setQrPayload("https://bit.ly/shop-cashback-update.apk");
-                    }}
-                  >
-                    Load Malicious Sticker Sample
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setQrPayload("upi://pay?pa=chaiwala.store@icici&pn=Chai%20Stall&cu=INR");
-                    }}
-                  >
-                    Load Genuine Shop QR
-                  </Button>
-                </div>
-
-                <Button onClick={() => handleVerifyQr()} disabled={!qrPayload.trim()} className="w-full">
-                  Scan QR Integrity
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="lg:col-span-6">
-              <CardHeader>
-                <CardTitle className="text-base">QR Integrity Verdict</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {!qrResult ? (
-                  <div className="py-12 text-center text-slate-500 text-xs">
-                    Paste a QR payload on the left to verify if it has been tampered with or points to an APK scam.
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div
-                      className={`rounded-xl border p-4 ${
-                        qrResult.isTampered
-                          ? "border-rose-500/40 bg-rose-950/20 text-rose-200"
-                          : "border-emerald-500/40 bg-emerald-950/20 text-emerald-200"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span className="font-bold text-sm">
-                          {qrResult.isTampered
-                            ? "TAMPERED / SUSPICIOUS QR DETECTED!"
-                            : "VERIFIED SAFE PAYMENT QR"}
-                        </span>
-                        <Badge variant={qrResult.isTampered ? "destructive" : "success"}>
-                          Risk: {qrResult.riskScore}/100
-                        </Badge>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5 text-xs">
-                      <div className="font-semibold text-slate-400">Recommended Steps:</div>
-                      <ul className="space-y-1 text-slate-300">
-                        {qrResult.recommendations.map((r: string, idx: number) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 mt-1.5 shrink-0" />
-                            <span>{r}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
+          <VulnerableQrScanner language={lang} />
         </TabsContent>
 
         {/* TAB 3: FAKE PAYMENT SCREENSHOT VERIFIER */}

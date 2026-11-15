@@ -12,18 +12,14 @@ import {
   Menu,
   X,
   Sparkles,
-  Trophy,
-  PhoneCall,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSession, signOut } from "@/lib/auth-client";
-import { JudgeLiveDemoModal } from "@/components/JudgeLiveDemoModal";
 import { ScamCallSimulator } from "@/components/ScamCallSimulator";
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [judgeModalOpen, setJudgeModalOpen] = useState(false);
   const [callSimOpen, setCallSimOpen] = useState(false);
   const { data: session } = useSession();
 
@@ -73,15 +69,6 @@ export function Navbar() {
 
         {/* Actions & Login - Clean & Dynamic Session Aware */}
         <div className="hidden sm:flex items-center gap-2.5">
-          <button
-            onClick={() => setJudgeModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-amber-500/50 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 text-xs font-bold hover:from-amber-500/30 hover:to-orange-500/30 shadow-md shadow-amber-500/10 transition-all active:scale-95"
-            title="Open Judge Sandbox & Stage Presentation QR"
-          >
-            <Trophy className="h-3.5 w-3.5 text-amber-400" />
-            <span>Judge Hub</span>
-          </button>
-
           {session?.user ? (
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5 rounded-lg border border-slate-800 bg-[#080D1B] px-2.5 py-1 text-xs">
@@ -149,16 +136,7 @@ export function Navbar() {
             );
           })}
           <div className="pt-2 border-t border-slate-800 flex gap-2">
-            <button
-            onClick={() => setJudgeModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-amber-500/50 bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 text-xs font-bold hover:from-amber-500/30 hover:to-orange-500/30 shadow-md shadow-amber-500/10 transition-all active:scale-95"
-            title="Open Judge Sandbox & Stage Presentation QR"
-          >
-            <Trophy className="h-3.5 w-3.5 text-amber-400" />
-            <span>Judge Hub</span>
-          </button>
-
-          {session?.user ? (
+            {session?.user ? (
               <Button
                 variant="outline"
                 size="sm"
@@ -182,12 +160,6 @@ export function Navbar() {
           </div>
         </div>
       )}
-      {/* Judge & Stage Live Sandbox Modal */}
-      <JudgeLiveDemoModal
-        isOpen={judgeModalOpen}
-        onClose={() => setJudgeModalOpen(false)}
-        onOpenCallSimulator={() => setCallSimOpen(true)}
-      />
 
       {/* AI Scam Call Simulator Modal */}
       <ScamCallSimulator

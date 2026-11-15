@@ -1,7 +1,7 @@
 import { jsPDF } from "jspdf";
 
 export interface IncidentReportData {
-  category: "UPI_DEBIT_TRAP" | "AI_VOICE_CLONE" | "QR_CODE_TAMPERING" | "FAKE_PAYMENT_UTR" | "INDUSTRIAL_CODE_VULN";
+  category: "UPI_DEBIT_TRAP" | "AI_VOICE_CLONE" | "QR_CODE_TAMPERING" | "FAKE_PAYMENT_UTR" | "INDUSTRIAL_CODE_VULN" | "CBI_DIGITAL_ARREST";
   title: string;
   verdict: string;
   riskScore: number;
