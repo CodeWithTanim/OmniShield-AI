@@ -14,17 +14,20 @@ import {
   ShieldAlert,
   ArrowRight,
   ShieldCheck,
+  Camera,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { CameraQrScanner } from "@/components/CameraQrScanner";
 
 export default function ShopArmorPage() {
   const [activeTab, setActiveTab] = useState("whatsapp");
   const [lang, setLang] = useState<"en" | "bn" | "hi">("en");
   const [copied, setCopied] = useState(false);
+  const [showCamera, setShowCamera] = useState(false);
 
   // WhatsApp Alert Generator State
   const [scamSnippet, setScamSnippet] = useState(
@@ -64,9 +67,10 @@ export default function ShopArmorPage() {
     return `https://wa.me/?text=${encodeURIComponent(getStaffWarningText())}`;
   };
 
-  const handleVerifyQr = () => {
-    if (!qrPayload.trim()) return;
-    const lower = qrPayload.toLowerCase();
+  const handleVerifyQr = (overridePayload?: string | React.MouseEvent) => {
+    const targetPayload = typeof overridePayload === "string" ? overridePayload : qrPayload;
+    if (!targetPayload.trim()) return;
+    const lower = targetPayload.toLowerCase();
     const isTampered =
       lower.includes("bit.ly") ||
       lower.includes("ngrok") ||
@@ -75,7 +79,7 @@ export default function ShopArmorPage() {
       lower.includes("claim-reward");
 
     setQrResult({
-      payload: qrPayload,
+      payload: targetPayload,
       isTampered,
       verdict: isTampered ? "SUSPICIOUS_QR_TAMPERING" : "GENUINE_PAYMENT_QR",
       riskScore: isTampered ? 88 : 12,
@@ -250,6 +254,34 @@ export default function ShopArmorPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                {/* Live Camera Scanner Trigger */}
+                <Button
+                  type="button"
+                  variant="cyber"
+                  onClick={() => setShowCamera(true)}
+                  className="w-full gap-2 shadow-lg shadow-cyan-500/20"
+                >
+                  <Camera className="h-4 w-4 text-cyan-300 animate-pulse" />
+                  <span>📸 Open Live Counter Camera QR Scanner</span>
+                </Button>
+
+                <CameraQrScanner
+                  isOpen={showCamera}
+                  onClose={() => setShowCamera(false)}
+                  onScanSuccess={(decodedText) => {
+                    setQrPayload(decodedText);
+                    handleVerifyQr(decodedText);
+                  }}
+                />
+
+                <div className="relative flex py-1 items-center">
+                  <div className="flex-grow border-t border-slate-800"></div>
+                  <span className="flex-shrink mx-2 text-[10px] text-slate-500 uppercase tracking-wider">
+                    Or Enter QR String Manually
+                  </span>
+                  <div className="flex-grow border-t border-slate-800"></div>
+                </div>
+
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-slate-400">Paste QR Decoded URL or String:</label>
                   <Input
@@ -280,7 +312,7 @@ export default function ShopArmorPage() {
                   </Button>
                 </div>
 
-                <Button onClick={handleVerifyQr} disabled={!qrPayload.trim()} className="w-full">
+                <Button onClick={() => handleVerifyQr()} disabled={!qrPayload.trim()} className="w-full">
                   Scan QR Integrity
                 </Button>
               </CardContent>

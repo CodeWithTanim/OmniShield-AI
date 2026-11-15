@@ -1,0 +1,18 @@
+{
+  "name": "OmniShield AI — Cyber Safety Platform",
+  "short_name": "OmniShield",
+  "description": "Unified cyber safety intelligence platform protecting citizens, shopkeepers, and factories from scams.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050814",
+  "theme_color": "#06B6D4",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

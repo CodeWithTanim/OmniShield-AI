@@ -14,13 +14,16 @@ import {
   Sparkles,
   PhoneCall,
   CreditCard,
+  FileText,
 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { VoiceSpeakerButton } from "@/components/VoiceSpeakerButton";
+import { LiveVoiceRecorder } from "@/components/LiveVoiceRecorder";
 import { SupportedLanguage } from "@/lib/speech";
+import { generateIncidentPdfReport } from "@/lib/pdfReport";
 
 const getActiveUpiWarning = (res: any, lang: SupportedLanguage) => {
   if (!res) return "";
@@ -230,6 +233,16 @@ export default function CitizenShieldPage() {
                   </div>
                 </div>
 
+                {/* Live Microphone Recorder with Audio Visualizer */}
+                <LiveVoiceRecorder
+                  language={language}
+                  onTranscriptChange={(text) => setTranscript(text)}
+                  onRecordingComplete={(text) => {
+                    setTranscript(text);
+                    handleAnalyzeVoice(text);
+                  }}
+                />
+
                 <div className="space-y-2">
                   <textarea
                     rows={5}
@@ -348,6 +361,31 @@ export default function CitizenShieldPage() {
                         ))}
                       </ul>
                     </div>
+
+                    {/* Official Cybercrime Incident PDF Report Download */}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        generateIncidentPdfReport({
+                          category: "AI_VOICE_CLONE",
+                          title: "AI Voice Clone Emergency Distress Call",
+                          verdict: voiceResult.verdict,
+                          riskScore: voiceResult.deepfakeProbability,
+                          subjectOrTarget: voiceResult.audioName || voiceResult.transcript?.slice(0, 80),
+                          indicators: voiceResult.detectedPatterns || ["Synthetic vocal frequency match", "Emotional coercion signals"],
+                          recommendations: voiceResult.recommendations || [
+                            "Do NOT send funds via UPI, Bank Transfer or Gift Cards.",
+                            "Report the scam caller number to National Cybercrime Helpline 1930.",
+                          ],
+                        });
+                      }}
+                      className="w-full text-xs gap-2 border-rose-500/40 text-rose-300 hover:bg-rose-950/30 shadow-md"
+                    >
+                      <FileText className="h-3.5 w-3.5 text-rose-400" />
+                      <span>Download Cybercrime Incident Dossier (PDF)</span>
+                    </Button>
                   </div>
                 )}
               </CardContent>
@@ -527,6 +565,36 @@ export default function CitizenShieldPage() {
                         </ul>
                       </div>
                     )}
+
+                    {/* Official Cybercrime Incident PDF Report Download */}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        generateIncidentPdfReport({
+                          category: "UPI_DEBIT_TRAP",
+                          title: "UPI Collect Request Debit Trap Deception",
+                          verdict: upiResult.isDangerous ? "DANGER_DEBIT_TRAP" : "NORMAL_PAYMENT",
+                          riskScore: upiResult.scamScore,
+                          subjectOrTarget: upiResult.payeeVpa || upiResult.rawInput?.slice(0, 80),
+                          indicators: upiResult.suspiciousIndicators || ["Deceptive note requesting PIN to receive money"],
+                          recommendations: [
+                            "Never enter UPI PIN when expecting incoming payment.",
+                            "Block the suspicious VPA immediately in your banking/UPI application.",
+                            "Submit fraudulent payee details to 1930 helpline.",
+                          ],
+                          extraDetails: {
+                            "Payee VPA": upiResult.payeeVpa || "N/A",
+                            "Amount Requested": upiResult.amount ? `₹${upiResult.amount}` : "Dynamic",
+                          },
+                        });
+                      }}
+                      className="w-full text-xs gap-2 border-cyan-500/40 text-cyan-300 hover:bg-cyan-950/30 shadow-md"
+                    >
+                      <FileText className="h-3.5 w-3.5 text-cyan-400" />
+                      <span>Download Cybercrime Incident Dossier (PDF)</span>
+                    </Button>
                   </div>
                 )}
               </CardContent>

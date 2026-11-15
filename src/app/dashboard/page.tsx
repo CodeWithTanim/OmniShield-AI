@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatTimestamp } from "@/lib/utils";
 import { useSession } from "@/lib/auth-client";
+import { LiveThreatMap } from "@/components/LiveThreatMap";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
@@ -167,6 +168,9 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Interactive Geographic Threat Map */}
+      <LiveThreatMap />
 
       {/* Filter Chips & Recent Events Table */}
       <Card>
