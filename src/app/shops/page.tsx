@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { CameraQrScanner } from "@/components/CameraQrScanner";
+import { OmniSoundBox } from "@/components/OmniSoundBox";
 
 export default function ShopArmorPage() {
   const [activeTab, setActiveTab] = useState("whatsapp");
@@ -144,6 +145,9 @@ export default function ShopArmorPage() {
           ))}
         </div>
       </div>
+
+      {/* OmniSound Merchant Soundbox Hardware Component */}
+      <OmniSoundBox language={lang} className="mb-6" />
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3 max-w-lg">

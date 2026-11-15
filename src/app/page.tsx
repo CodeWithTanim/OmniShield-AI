@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   ShieldAlert,
@@ -17,13 +17,19 @@ import {
   PhoneCall,
   Activity,
   ChevronDown,
+  Trophy,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { VoiceSpeakerButton } from "@/components/VoiceSpeakerButton";
+import { JudgeLiveDemoModal } from "@/components/JudgeLiveDemoModal";
+import { ScamCallSimulator } from "@/components/ScamCallSimulator";
 
 export default function HomePage() {
+  const [judgeModalOpen, setJudgeModalOpen] = useState(false);
+  const [callSimOpen, setCallSimOpen] = useState(false);
   return (
     <div className="space-y-16 pb-16">
       {/* FULL VIEWPORT HERO SECTION */}
@@ -76,6 +82,29 @@ export default function HomePage() {
                 <span>Factory & Code Guard</span>
               </Button>
             </Link>
+          </div>
+
+          {/* STAGE DEMO & JUDGE QUICK HOOKS */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={() => setCallSimOpen(true)}
+              className="gap-2 h-9 px-4 text-xs font-bold shadow-lg shadow-rose-600/30 hover:scale-105 transition-all"
+            >
+              <PhoneCall className="h-3.5 w-3.5 animate-bounce" />
+              <span>Simulate AI Scam Call (Live Demo)</span>
+            </Button>
+
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setJudgeModalOpen(true)}
+              className="gap-2 h-9 px-4 text-xs font-bold border-amber-500/50 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 shadow-md hover:scale-105 transition-all"
+            >
+              <Trophy className="h-3.5 w-3.5 text-amber-400" />
+              <span>Judge's Live Mobile Sandbox (QR)</span>
+            </Button>
           </div>
 
           {/* Quick Voice Demo Pill */}
@@ -300,6 +329,19 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Judge & Stage Live Demo Modal */}
+      <JudgeLiveDemoModal
+        isOpen={judgeModalOpen}
+        onClose={() => setJudgeModalOpen(false)}
+        onOpenCallSimulator={() => setCallSimOpen(true)}
+      />
+
+      {/* AI Scam Call Simulator Modal */}
+      <ScamCallSimulator
+        isOpen={callSimOpen}
+        onClose={() => setCallSimOpen(false)}
+      />
     </div>
   );
 }

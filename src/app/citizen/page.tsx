@@ -24,6 +24,7 @@ import { VoiceSpeakerButton } from "@/components/VoiceSpeakerButton";
 import { LiveVoiceRecorder } from "@/components/LiveVoiceRecorder";
 import { SupportedLanguage } from "@/lib/speech";
 import { generateIncidentPdfReport } from "@/lib/pdfReport";
+import { ScamCallSimulator } from "@/components/ScamCallSimulator";
 
 const getActiveUpiWarning = (res: any, lang: SupportedLanguage) => {
   if (!res) return "";
@@ -63,6 +64,7 @@ const getActiveGoldenRule = (res: any, lang: SupportedLanguage) => {
 export default function CitizenShieldPage() {
   const [activeTab, setActiveTab] = useState("voice");
   const [language, setLanguage] = useState<SupportedLanguage>("hi");
+  const [isCallSimOpen, setIsCallSimOpen] = useState(false);
 
   // Voice State
   const [transcript, setTranscript] = useState("");
@@ -180,6 +182,42 @@ export default function CitizenShieldPage() {
           ))}
         </div>
       </div>
+
+      {/* LIVE STAGE DEMO BANNER FOR JUDGES */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl border border-rose-500/50 bg-gradient-to-r from-rose-950/40 via-[#091026] to-cyan-950/30 shadow-2xl backdrop-blur-md">
+        <div className="flex items-center gap-3.5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-rose-500/20 text-rose-400 border border-rose-500/40 shadow-lg shadow-rose-500/20">
+            <PhoneCall className="h-6 w-6 animate-bounce" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-black text-white">Live AI Scam Call Simulator</span>
+              <Badge className="bg-rose-500/20 text-rose-300 border-rose-500/40 text-[10px]">
+                Stage Demo
+              </Badge>
+            </div>
+            <p className="text-xs text-slate-300 mt-0.5">
+              Experience an incoming extortion call (CBI Digital Arrest / AI Voice Kidnap) with 4-second automated regional warning.
+            </p>
+          </div>
+        </div>
+
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => setIsCallSimOpen(true)}
+          className="gap-2 shrink-0 shadow-lg shadow-rose-600/30 font-bold text-xs"
+        >
+          <PhoneCall className="h-3.5 w-3.5" />
+          <span>Launch Phone Simulator</span>
+        </Button>
+      </div>
+
+      <ScamCallSimulator
+        isOpen={isCallSimOpen}
+        onClose={() => setIsCallSimOpen(false)}
+        language={language}
+      />
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2 max-w-md">

@@ -130,15 +130,19 @@ OmniShield-AI/
     │       ├── history/route.ts     # MongoDB audit logs & aggregated telemetry stats
     │       └── tts/route.ts         # High-definition multi-language audio streaming
     ├── components/
+    │   ├── ScamCallSimulator.tsx   # Realistic incoming phone call simulation & 4-second AI defense
+    │   ├── OmniSoundBox.tsx         # OmniSound™ Smart Merchant Audio Soundbox (Paytm/bKash replica)
+    │   ├── JudgeLiveDemoModal.tsx   # Judge & Stage Presentation Hub with instant mobile handoff QR
     │   ├── CameraQrScanner.tsx      # Live camera viewfinder & automatic QR reader
     │   ├── LiveVoiceRecorder.tsx    # Live mic recording with pulsing audio waveform canvas
     │   ├── LiveThreatMap.tsx        # Interactive Indian regional threat radar map
     │   ├── PwaInstallPrompt.tsx     # Floating 1-click PWA app installer for mobile/desktop
     │   ├── VoiceSpeakerButton.tsx   # Audio player with reactive language switching
-    │   ├── Navbar.tsx               # Minimalist single-line header with session awareness
+    │   ├── Navbar.tsx               # Minimalist single-line header with session & Judge Hub button
     │   ├── Footer.tsx               # Enterprise cyber safety footer with 1930 helpline
     │   └── ui/                      # Base primitive UI components (Button, Badge, Card, etc.)
     └── lib/
+        ├── soundEffects.ts          # Web Audio API ringtone, siren, chime & buzzer synthesizers
         ├── auth.ts                  # BetterAuth server configuration & MongoDB adapter
         ├── auth-client.ts           # BetterAuth client hooks (`signIn`, `signUp`, `useSession`)
         ├── db.ts                    # MongoDB MongoClient connection pool & caching
@@ -165,10 +169,23 @@ OmniShield-AI/
 - **Dynamic Multi-Language Spoken Alerts** (`/api/tts` & `VoiceSpeakerButton.tsx`):
   - Speaks out loud in **Hindi**, **Bengali**, and **English**.
   - Changing the top language selector instantaneously updates on-screen text and voice audio without rescanning.
+- **Live AI Scam Call Simulator** (`ScamCallSimulator.tsx`):
+  - Simulates a realistic incoming mobile phone call on iOS/Android interface with dual-tone ringtone synthesizer (`playPhoneRing`).
+  - Pre-loaded with frontline attack scenarios: *CBI Digital Arrest*, *AI Voice Clone Kidnap*, and *Utility Power Cut Phishing*.
+  - When answered, renders dynamic speech frequency bars, types real-time transcripts, and flashes an emergency red strobe within 3.8 seconds.
+  - Sounds a police alert siren (`playSirenAlert`) and speaks out loud in regional Bengali, Hindi, or English.
+  - Provides a 1-click button to download the complete 1930 Cybercrime Police Dossier directly from the call screen.
 - **1-Click Cybercrime Incident Dossier** (`/lib/pdfReport.ts`):
   - Generates an official PDF report with Incident Reference ID, evidence, and 1930 filing directions.
 
 ### 5.2 Shop Counter Armor (`/shops`)
+- **OmniSound™ Smart Merchant Audio Box** (`OmniSoundBox.tsx`):
+  - Hardware replica of ubiquitous South Asian merchant soundboxes (Paytm / bKash / PhonePe).
+  - Equipped with an LCD display, speaker mesh simulation, multi-color LED status ring, and volume control.
+  - Three distinct audible broadcast modes:
+    1. *Fake Payment Screenshot / UTR Warning*: Sounds warning buzzer and announces out loud: *"সাবধান! এটি একটি জাল পেমেন্ট স্ক্রিনশট, শূন্য টাকা প্রাপ্ত হয়েছে!"*
+    2. *Tampered QR Sticker Warning*: Sounds alert siren and announces counter sticker tampering.
+    3. *Authentic Payment Confirmation*: Melodic chime followed by spoken payment credit announcement.
 - **Live Counter Camera QR Scanner** (`CameraQrScanner.tsx`):
   - Uses `html5-qrcode` to access the device's rear camera with live viewfinder overlay.
   - Automatically captures counter standees and checks for URL shorteners (`bit.ly`), rogue IP redirectors, and malicious `.apk` download traps.
@@ -177,6 +194,11 @@ OmniShield-AI/
   - 1-click clipboard copy or direct `wa.me/?text=...` trigger to warn all shop assistants in under 5 seconds.
 - **Fake 12-Digit UTR Payment Verifier**:
   - Validates bank transaction sequence structure against popular spoofing apps (e.g. Paytm Spoof).
+
+### 5.3 Judge & Stage Presentation Hub (`JudgeLiveDemoModal.tsx`)
+- Accessible via the **"Judge Hub"** button in the header and landing page hero.
+- Generates a dynamic QR code pointing to the live network URL for instantaneous mobile handoff to judges' phones without any installation.
+- Provides 1-click stage execution triggers for all three core frontiers.
 
 ### 5.3 Factory & Code Guard (`/factory`)
 - **AI Code Vulnerability Scanner** (`/api/analyze/code`):
